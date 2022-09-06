@@ -1,4 +1,80 @@
-.rtl, header {
+/* top bar (Purble) */
+.rtl, header, body {
     direction: rtl;
     text-align: right
 }
+
+header .custRtl {
+    text-align: right;
+    padding-right: 0;
+}
+
+header .custRtl > form {
+    text-align: left !important
+}
+
+/* Top bar (Navigation) */
+div#navbarmain { justify-content: end } 
+
+div#navbarmain .navbar-nav {
+    text-align: left;
+    margin-left: 0 !important;
+}
+
+@media(max-width: 991px) {
+    div#navbarmain .navbar-nav {
+        text-align: right;
+        padding-right: 0 
+    }
+    
+}
+
+/* back to top arrow */
+.backtop {
+    left: 55px !important;
+}
+
+@media (max-width: 992px){
+    .backtop {
+        left: 15px !important;
+    }
+}
+
+/* section two */
+.banner { background-size: contain; direction: initial }
+
+.divider { margin-left: auto }
+
+.banner .col-lg-6, .banner p.pr-5 {
+    text-align: right;
+    padding-right: 0 !important;
+    direction: rtl
+}
+
+/* section three */
+section.section .row.align-items-center { flex-direction: row-reverse }
+
+/* served customer section & dragger list section & parteners */
+section.section.appoinment, .slick-list.draggabl, .row.clients-logo.slick-initialized.slick-slider {
+    direction: initial;
+}
+
+/* pricing  */
+ul.list-unstyled.my-5.text-small.text-left.font-weight-normal {
+    text-align: right !important;
+    padding-right: 0;
+}
+
+/* footer */
+footer.footer .col-lg-4.mr-auto.col-sm-6 { margin-right: 0 !important }
+
+footer ul.list-unstyled.footer-menu.lh-35 { padding-right: 0 } /* links lists father (ul) */
+
+footer ul.list-inline.footer-socials.mt-4 { /* social media father */
+    padding-right: 0;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+}
+
+footer ul.list-inline.footer-socials.mt-4 li { margin-right: 0 } /* social media lists */
