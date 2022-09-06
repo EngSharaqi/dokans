@@ -60,6 +60,12 @@ div#navbarmain .navbar-nav {
     direction: rtl
 }
 
+@media (max-width: 991px){
+    .banner { padding: 0 15px }
+    .banner .block{ margin: 0 10px }
+    .banner .block h1 { font-size: 25px }
+}
+
 /* section three */
 section.section .row.align-items-center { flex-direction: row-reverse }
 
