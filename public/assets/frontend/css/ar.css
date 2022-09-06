@@ -1,3 +1,10 @@
+/* 
+    License:   Created and editied by 
+    Author:    Mohamed A. Sharaqi
+    LinkedIn:  https://www.linkedin.com/in/engsharaqi/
+*/
+
+
 /* top bar (Purble) */
 .rtl, header, body {
     direction: rtl;
@@ -31,11 +38,13 @@ div#navbarmain .navbar-nav {
 
 /* back to top arrow */
 .backtop {
+    right: unset;
     left: 55px !important;
 }
 
 @media (max-width: 992px){
     .backtop {
+        right: unset;
         left: 15px !important;
     }
 }
@@ -55,7 +64,7 @@ div#navbarmain .navbar-nav {
 section.section .row.align-items-center { flex-direction: row-reverse }
 
 /* served customer section & dragger list section & parteners */
-section.section.appoinment, .slick-list.draggabl, .row.clients-logo.slick-initialized.slick-slider {
+section.section.appoinment, .col-lg-12.testimonial-wrap-2.slick-initialized.slick-slider.slick-dotted, .slick-list.draggabl, .row.clients-logo.slick-initialized.slick-slider {
     direction: initial;
 }
 
@@ -78,3 +87,10 @@ footer ul.list-inline.footer-socials.mt-4 { /* social media father */
 }
 
 footer ul.list-inline.footer-socials.mt-4 li { margin-right: 0 } /* social media lists */
+
+/* login page */
+.card.card-primary, input#email, input#password { text-align: right }
+
+.card .card-header h4 {
+    width: 100%
+}
