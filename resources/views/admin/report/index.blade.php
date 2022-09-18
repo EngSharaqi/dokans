@@ -61,21 +61,21 @@
 				</div>
 			</div>
 		</div>
-	</div>                  
+	</div>
 </div>
 
 
 <div class="card">
 	<div class="card-header">
-				
+
 				<form class="card-header-form">
 					<div class="d-flex">
 						<input type="text" name="start" class="form-control datepicker" value="{{ $start ?? '' }}">
-						
+
 						<input type="text" name="end" class="form-control datepicker" value="{{ $end ?? '' }}">
 
 						<button class="btn btn-primary btn-icon" type="submit"><i class="fas fa-search"></i></button>
-					</div>					
+					</div>
 				</form>
 			</div>
 	<div class="card-body">
@@ -83,10 +83,10 @@
 				<table class="table table-hover table-nowrap card-table text-center">
 					<thead>
 						<tr>
-							
+
 							<th class="text-left" >{{ __('Order') }}</th>
 							<th >{{ __('Date') }}</th>
-							
+
 							<th class="text-right">{{ __('Order total') }}</th>
 							<th>{{ __('Payment Method') }}</th>
 							<th>{{ __('Payment Status') }}</th>
@@ -98,21 +98,21 @@
 						@foreach($posts ?? [] as $key => $row)
 						<tr>
 
-							<td class="text-left"><a href="{{ route('admin.order.invoice',$row->id) }}">{{ $row->order_no }}</a></td>
+							<td class="text-left"><a href="{{ route('admin.orders.invoice',$row->id) }}">{{ $row->order_no }}</a></td>
 							<td>{{ $row->created_at->format('d-F-Y') }}</td>
-							
+
 							<td>{{ amount_format($row->amount) }}</td>
 							<td>{{ $row->category->name ?? '' }}</td>
 							<td>
 								@if($row->payment_status==1)
 								<span class="badge badge-success">{{ __('Paid') }}</span>
-								
+
 								@elseif($row->payment_status==2)
 								<span class="badge badge-warning">{{ __('Pending') }}</span>
 								@else
 								<span class="badge badge-danger">{{ __('Fail') }}</span>
 								@endif
-								
+
 							</td>
 
 							<td>
@@ -124,20 +124,20 @@
 									{{ __('Action') }}
 								</button>
 								<div class="dropdown-menu">
-									<a class="dropdown-item has-icon" href="{{ route('admin.order.edit',$row->id) }}"><i class="far fa-edit"></i> {{ __('Edit') }}</a>
-									<a class="dropdown-item has-icon" href="{{ route('admin.order.show',$row->id) }}"><i class="far fa-eye"></i> {{ __('View') }}</a>
-									<a class="dropdown-item has-icon" href="{{ route('admin.order.invoice',$row->id) }}"><i class="fa fa-file-invoice"></i> {{ __('Download Invoice') }}</a>
+									<a class="dropdown-item has-icon" href="{{ route('admin.orders.edit',$row->id) }}"><i class="far fa-edit"></i> {{ __('Edit') }}</a>
+									<a class="dropdown-item has-icon" href="{{ route('admin.orders.show',$row->id) }}"><i class="far fa-eye"></i> {{ __('View') }}</a>
+									<a class="dropdown-item has-icon" href="{{ route('admin.orders.invoice',$row->id) }}"><i class="fa fa-file-invoice"></i> {{ __('Download Invoice') }}</a>
 
 								</div>
 							</div></td>
-						</tr>	
+						</tr>
 						@endforeach
 					</tbody>
 				</table>
 
 			</div>
 		</div>
-	
+
 	<div class="card-footer d-flex justify-content-between">
 		{{ $posts->appends($request->all())->links('vendor.pagination.bootstrap-4') }}
 	</div>

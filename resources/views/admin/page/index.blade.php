@@ -8,15 +8,15 @@
 				<h4>{{ __('Page List') }}</h4>
 			</div>
 			<div class="col-lg-6">
-				
+
 			</div>
 		</div>
 		<br>
 		<div class="card-action-filter">
-			<form method="post" class="basicform_with_reload" action="{{ route('admin.pages.destroys') }}">
+			<form method="post" class="basicform_with_reload" action="{{ route('admin.pages.destroy') }}">
 				@csrf
 				<div class="row">
-					@can('page.delete')
+{{--					@can('page.delete')--}}
 					<div class="col-lg-6">
 						<div class="d-flex">
 							<div class="single-filter">
@@ -33,15 +33,15 @@
 							</div>
 						</div>
 					</div>
-					@endcan
+{{--					@endcan--}}
 
-					@can('page.create')
+{{--					@can('page.create')--}}
 					<div class="col-lg-6">
 						<div class="add-new-btn">
-							<a href="{{ route('admin.page.create') }}" class="btn btn-primary float-right">{{ __('Add New Page') }}</a>
+							<a href="{{ route('admin.pages.create') }}" class="btn btn-primary float-right">{{ __('Add New Page') }}</a>
 						</div>
 					</div>
-					@endcan
+{{--					@endcan--}}
 				</div>
 			</div>
 			<div class="table-responsive custom-table">
@@ -56,7 +56,7 @@
 							</th>
 							<th class="am-title">{{ __('Title') }}</th>
 							<th class="am-title">{{ __('Url') }}</th>
-							
+
 							<th class="am-date">{{ __('Last Update') }}</th>
 						</tr>
 					</thead>
@@ -71,17 +71,17 @@
 							</th>
 							<td>
 								{{ $page->title }}
-								@can('page.edit')
+{{--								@can('page.edit')--}}
 								<div class="hover">
-									<a href="{{ route('admin.page.edit',$page->id) }}">{{ __('Edit') }}</a>
+									<a href="{{ route('admin.pages.edit',$page->id) }}">{{ __('Edit') }}</a>
 
-									
+
 								</div>
-								@endcan
+{{--								@endcan--}}
 							</td>
-							<input type="text" class="offscreen" id="myUrl{{ $page->id }}" value="{{ url('/page',$page->slug)  }}">
-							<td style="cursor: pointer" onclick="copyUrl('{{ $page->id }}')">{{ url('/page',$page->slug)  }}</td>
-							
+							<input type="text" class="offscreen" id="myUrl{{ $page->id }}" value="{{ url('/pages',$page->slug)  }}">
+							<td style="cursor: pointer" onclick="copyUrl('{{ $page->id }}')">{{ url('/pages',$page->slug)  }}</td>
+
 							<td>{{ __('Last Modified') }}
 								<div class="date">
 									{{ $page->updated_at->diffForHumans() }}
@@ -101,7 +101,7 @@
 						</th>
 						<th class="am-title">{{ __('Title') }}</th>
 						<th class="am-title">{{ __('Url') }}</th>
-						
+
 						<th class="am-date">{{ __('Last Update') }}</th>
 					</tr>
 				</tfoot>

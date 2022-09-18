@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
 <div class="row">
-	<div class="col-lg-9">      
+	<div class="col-lg-9">
 		<div class="card">
 			<div class="card-body">
 				<h4>{{ __('Add new Page') }}</h4>
-				<form method="post" action="{{ route('admin.page.store') }}" >
+				<form method="post" action="{{ route('admin.pages.store') }}" >
 					@csrf
 					<div class="custom-form pt-20">
 						@php
@@ -18,7 +18,7 @@
 
 						echo  input($arr);
 
-						
+
 
 						$arrn['title']= 'Page Content';
 						$arrn['name']= 'content';
@@ -31,10 +31,10 @@
 						$arr['placeholder']= 'Meta description';
 						$arr['name']= 'excerpt';
 						$arr['is_required'] = true;
-						
+
 						echo  textarea($arr);
 						@endphp
-						
+
 					</div>
 				</div>
 			</div>
@@ -44,8 +44,8 @@
 			<div class="single-area">
 				<div class="card">
 					<div class="card-body">
-						
-						
+
+
 						<div class="btn-publish">
 							<button type="submit" class="btn btn-primary col-12"><i class="fa fa-save"></i> {{ __('Save') }}</button>
 						</div>

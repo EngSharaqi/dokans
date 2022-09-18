@@ -31,7 +31,7 @@
 					@endif
 				</div>
 				</div>
-				<form class="basicform" action="{{ route('admin.language.store') }}" method="post">
+				<form class="basicform" action="{{ route('admin.languages.store') }}" method="post">
 					@csrf
 					<div class="form-group row mb-4">
 						<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" >{{ __('Select Language') }}</label>
@@ -48,7 +48,7 @@
 						<div class="col-sm-12 col-md-7">
 							<input type="text" name="language_name" class="form-control" required="" placeholder="English">
 						</div>
-					</div>             
+					</div>
 
 					<div class="form-group row mb-4">
 						<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>

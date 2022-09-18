@@ -68,8 +68,8 @@
 								@endif
 							</td>
 						</tr>
-						
-						
+
+
 					</table>
 				</div>
 			</div>
@@ -85,7 +85,7 @@
 					<table class="table table-hover">
 						<tr>
 							<td>{{ __('User Name') }}</td>
-							<td><b><a href="{{ route('admin.customer.show',$info->user->id) }}">{{ $info->user->name ?? '' }}</a></b></td>
+							<td><b><a href="{{ route('admin.customers.show',$info->user->id) }}">{{ $info->user->name ?? '' }}</a></b></td>
 						</tr>
 						<tr>
 							<td>{{ __('User Email') }}</td>
@@ -99,7 +99,7 @@
 						<tr>
 							<td>{{ __('Domain Status') }}</td>
 							<td>@if(!empty($user->user_domain))<b>
-								
+
 								@if($user->user_domain->status==1) <span class="badge badge-success">{{ __('Active') }}</span>
 								@elseif($user->user_domain->status==0) <span class="badge badge-danger">{{ __('Trash') }}</span>
 								@elseif($user->user_domain->status==2) <span class="badge badge-warning">{{ __('Draft') }}</span>
@@ -107,9 +107,9 @@
 								@endif
 							</b>@endif</td>
 						</tr>
-						
+
 					</table>
-				</div>   		
+				</div>
 			</div>
 		</div>
 	</div>

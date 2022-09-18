@@ -7,14 +7,14 @@
 	<div class="col-12 mt-2">
 		<div class="card">
 			<div class="card-body">
-				
+
 					<div class="float-left mb-1">
-					
+
 					</div>
 					<div class="float-right">
-						@can('template.upload')
+{{--						@can('template.upload')--}}
 						<a href="#" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary">{{ __('Upload Theme') }}</a>
-						@endcan
+{{--						@endcan--}}
 					</div>
 
 					<div class="table-responsive">
@@ -58,7 +58,7 @@
 							</tfoot>
 						</table>
 					</div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -77,7 +77,7 @@
       </div>
       <form method="post" action="{{ route('admin.template.store') }}" class="basicform_with_reload">
       	@csrf
-      
+
       <div class="modal-body">
       	<div class="form-group">
       		<label>{{ __('Select File') }}</label>

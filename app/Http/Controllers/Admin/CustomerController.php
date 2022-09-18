@@ -27,14 +27,14 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        if (!Auth()->user()->can('customer.list')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('customer.list')) {
+//            return abort(401);
+//        }
         $type=$request->type ?? 'all';
         if ($type=="trash") {
            $type=0;
         }
-       
+
         if (!empty($request->src) && $request->term=="domain") {
             $this->request=$request->src;
             if ($type === 'all') {
@@ -48,7 +48,7 @@ class CustomerController extends Controller
                     return $q->where('domain',$request->src);
                 })->with('user_domain','user_plan')->where('status',$type)->latest()->paginate(40);
             }
-            
+
         }
         elseif (!empty($request->src) && !empty($request->term)) {
              if ($type === 'all') {
@@ -58,8 +58,8 @@ class CustomerController extends Controller
                 $posts=User::where('role_id',3)->where('status',$type)->with('user_domain','user_plan')->where($request->term,$request->src)->latest()->paginate(40);
              }
         }
-        else{  
-           if ($type === 'all') { 
+        else{
+           if ($type === 'all') {
             $posts=User::where('role_id',3)->with('user_domain','user_plan')->latest()->paginate(40);
            }
            else{
@@ -84,9 +84,9 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        if (!Auth()->user()->can('customer.create')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('customer.create')) {
+//            return abort(401);
+//        }
 
         return view('admin.customer.create');
     }
@@ -109,9 +109,9 @@ class CustomerController extends Controller
             'full_domain' => 'required|max:100|unique:domains,full_domain',
         ]);
 
-       
+
         $info=Plan::find($request->plan);
-        
+
 
 
          DB::beginTransaction();
@@ -149,7 +149,7 @@ class CustomerController extends Controller
          $userplan->payment_status=1;
          $userplan->save();
 
-        
+
 
         $dom=new Domain;
         $dom->domain=$request->domain_name;
@@ -169,7 +169,7 @@ class CustomerController extends Controller
         $user->save();
 
         $dom->orderlog()->create(['userplan_id'=>$userplan->id,'domain_id'=>$dom->id]);
-        
+
 
         DB::commit();
       } catch (Exception $e) {
@@ -192,9 +192,9 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-       if (!Auth()->user()->can('customer.view')) {
-            return abort(401);
-       }
+//       if (!Auth()->user()->can('customer.view')) {
+//            return abort(401);
+//       }
 
        $info=User::withCount('term','orders','customers')->where('role_id',3)->with('user_domain','user_plan')->findorFail($id);
        $histories=Userplan::with('plan_info','category')->where('user_id',$id)->latest()->paginate(20);
@@ -206,16 +206,16 @@ class CustomerController extends Controller
 
     public function planview($id)
     {
-       if (!Auth()->user()->can('customer.edit')) {
-            return abort(401);
-       }
+//       if (!Auth()->user()->can('customer.edit')) {
+//            return abort(401);
+//       }
 
        $info=User::withCount('term','orders','customers')->where('role_id',3)->findorFail($id);
-      
+
        $domain=Domain::where('user_id',$id)->first();
        $planinfo=json_decode($domain->data);
        abort_if(empty($planinfo),404);
-       
+
        return view('admin.customer.planinfo',compact('info','planinfo','domain'));
     }
 
@@ -233,7 +233,7 @@ class CustomerController extends Controller
         $plan_data['live_support']=$request->live_support;
         $plan_data['qr_code']=$request->qr_code;
         $plan_data['facebook_pixel']=$request->facebook_pixel;
-        
+
         $plan_data['custom_css']=$request->custom_css;
         $plan_data['custom_js']=$request->custom_js;
         $plan_data['gtm']=$request->gtm;
@@ -257,9 +257,9 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-       if (!Auth()->user()->can('customer.edit')) {
-            return abort(401);
-        }
+//       if (!Auth()->user()->can('customer.edit')) {
+//            return abort(401);
+//        }
 
         $info=User::findorFail($id);
         return view('admin.customer.edit',compact('info'));
@@ -300,9 +300,9 @@ class CustomerController extends Controller
      */
     public function destroy(Request $request)
     {
-        if (!Auth()->user()->can('customer.delete')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('customer.delete')) {
+//            return abort(401);
+//        }
 
         if ($request->type=="term_delete") {
             foreach ($request->ids ?? [] as $key => $id) {
@@ -343,8 +343,8 @@ class CustomerController extends Controller
 
     }
 
-    public function __construct()
-    {
-        abort_if(!Route::has('admin.customer.index'),404);
-    }
+//    public function __construct()
+//    {
+//        abort_if(!Route::has('admin.customer.index'),404);
+//    }
 }

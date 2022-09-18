@@ -19,16 +19,16 @@ class SeoController extends Controller
      */
     public function index()
     {
-      if (!Auth()->user()->can('seo')) {
-        return abort(401);
-      }
+//      if (!Auth()->user()->can('seo')) {
+//        return abort(401);
+//      }
        $settings=Option::where('key','seo')->first();
        $info=json_decode($settings->value ?? '');
 
        return view('admin.seo.index',compact('info'));
     }
 
- 
+
 
     /**
      * Store a newly created resource in storage.
@@ -55,7 +55,7 @@ class SeoController extends Controller
         $settings->value=$json;
         $settings->save();
         return response()->json('Site Seo Updated');
-        
+
     }
 
     public function update(Request $request,$id)
@@ -67,9 +67,9 @@ class SeoController extends Controller
         foreach ($posts as $key => $row) {
             $index->addSitemap(url('/page',$row->slug));
         }
-           
+
         $check= $index->write();
-      
+
         return response()->json('New Sitemap Generated');
     }
 }

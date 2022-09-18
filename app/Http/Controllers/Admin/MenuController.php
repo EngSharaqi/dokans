@@ -18,9 +18,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-    	if (!Auth()->user()->can('menu')) {
-            return abort(401);
-        }
+//    	if (!Auth()->user()->can('menu')) {
+//            return abort(401);
+//        }
         $menus= Adminmenu::latest()->get();
         $langs=Option::where('key','active_languages')->first();
         $langs=json_decode($langs->value ?? '');
@@ -39,13 +39,13 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-         if (!Auth()->user()->can('menu')) {
-            return abort(401);
-        }
+//         if (!Auth()->user()->can('menu')) {
+//            return abort(401);
+//        }
         if ($request->status==1) {
             if ($request->position == 'header') {
                 DB::table('adminmenus')->where('position',$request->position)->where('lang',$request->lang)->update(['status'=>0]);
-            }   
+            }
         }
         $men=new Adminmenu;
         $men->name=$request->name;
@@ -67,9 +67,9 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        if (!Auth()->user()->can('menu')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('menu')) {
+//            return abort(401);
+//        }
         $info= Adminmenu::find($id);
 
         return view('admin.menu.index',compact('info'));
@@ -80,9 +80,9 @@ class MenuController extends Controller
     */
     public function MenuNodeStore(Request $request)
     {
-        if (!Auth()->user()->can('menu')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('menu')) {
+//            return abort(401);
+//        }
         $info= Adminmenu::find($request->menu_id);
         $info->data=$request->data;
         $info->save();
@@ -116,9 +116,9 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if (!Auth()->user()->can('menu')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('menu')) {
+//            return abort(401);
+//        }
         if ($request->status==1) {
            if ($request->position == 'header') {
             DB::table('adminmenus')->where('position',$request->position)->where('lang',$request->lang)->update(['status'=>0]);
@@ -131,7 +131,7 @@ class MenuController extends Controller
     $men->status=$request->status;
     $men->lang=$request->lang;
     $men->save();
-    
+
     Cache::forget($request->position.$request->lang);
     return response()->json(['Menu Updated']);
     }
@@ -144,9 +144,9 @@ class MenuController extends Controller
      */
         public function destroy(Request $request)
         {
-            if (!Auth()->user()->can('menu')) {
-                return abort(401);
-            }
+//            if (!Auth()->user()->can('menu')) {
+//                return abort(401);
+//            }
             if ($request->method=='delete') {
              if ($request->ids) {
                 foreach ($request->ids as $id) {

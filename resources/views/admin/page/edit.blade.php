@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('content')
 <div class="row">
-	<div class="col-lg-9">      
+	<div class="col-lg-9">
 		<div class="card">
 			<div class="card-body">
 				<h4>{{ __('Edit Page') }}</h4>
-				<form method="post" action="{{ route('admin.page.update',$info->id) }}">
+				<form method="post" action="{{ route('admin.pages.update',$info->id) }}">
 					@csrf
 					@method('PUT')
 
@@ -22,14 +22,14 @@
 
 						echo  input($arr);
 
-						
-							
-						
+
+
+
 						$arr['title']= 'Page Content';
 						$arr['name']= 'content';
 						$arr['id']= 'content';
 						$arr['value'] = $info->content->value;
-						
+
 						echo  editor($arr);
 
 
@@ -41,7 +41,7 @@
 						$arr['value'] = $info->excerpt->value;
 
 						echo  textarea($arr);
-					
+
 						@endphp
 
 
@@ -63,8 +63,8 @@
 			<div class="single-area">
 				<div class="card">
 					<div class="card-body">
-						
-					
+
+
 						<div class="btn-publish">
 							<button type="submit" class="btn btn-primary col-12"><i class="fa fa-save"></i> {{ __('Save') }}</button>
 						</div>
@@ -84,8 +84,8 @@
 					</div>
 				</div>
 			</div>
-	</div>		
-		
+	</div>
+
 </form>
 @endsection
 

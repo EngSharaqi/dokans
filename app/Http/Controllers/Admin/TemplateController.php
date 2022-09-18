@@ -18,9 +18,9 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        if (!Auth()->user()->can('template.list')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('template.list')) {
+//            return abort(401);
+//        }
 
         $posts=Template::withCount('installed')->latest()->paginate(20);
 
@@ -36,9 +36,9 @@ class TemplateController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth()->user()->can('template.upload')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('template.upload')) {
+//            return abort(401);
+//        }
 
         $validatedData = $request->validate([
             'file' => 'required|mimes:zip',
@@ -85,7 +85,7 @@ class TemplateController extends Controller
 
                 return response()->json(['Theme Uploaded Successfully']);
              }
-             
+
           }
           else{
             File::deleteDirectory('uploads/tmp/'.$name);
@@ -95,7 +95,7 @@ class TemplateController extends Controller
         if (file_exists('uploads/tmp/'.$name)) {
             File::deleteDirectory('uploads/tmp/'.$name);
         }
-      
+
       }
 
       $msg['errors']['error']="Something Missing With This Theme";
@@ -112,9 +112,9 @@ class TemplateController extends Controller
      */
     public function destroy($id)
     {
-        if (!Auth()->user()->can('template.delete')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('template.delete')) {
+//            return abort(401);
+//        }
 
         $template= Template::findorFail($id);
         if (file_exists($template->asset_path)) {
@@ -122,13 +122,13 @@ class TemplateController extends Controller
         }
 
         if (file_exists(base_path('resources/views/'.$template->src_path))) {
-          
+
             File::deleteDirectory(base_path('resources/views/'.$template->src_path));
         }
        $template->delete();
 
         return back();
-       
+
 
     }
 }

@@ -17,9 +17,9 @@ class DomainController extends Controller
      */
     public function index(Request $request)
     {
-       if (!Auth()->user()->can('domain.list')) {
-        return abort(401);
-       }
+//       if (!Auth()->user()->can('domain.list')) {
+//        return abort(401);
+//       }
 
        if ($request->type=='email') {
         $this->email=$request->src;
@@ -33,7 +33,7 @@ class DomainController extends Controller
        else{
         $posts=Domain::with('user')->latest()->paginate(40);
        }
-        
+
 
 
         $all=Domain::count();
@@ -45,7 +45,7 @@ class DomainController extends Controller
         return view('admin.domain.index',compact('posts','request','all','actives','drafts','trash','type','Requested'));
     }
 
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -54,9 +54,9 @@ class DomainController extends Controller
      */
     public function create()
     {
-       if (!Auth()->user()->can('domain.create')) {
-        return abort(401);
-       }
+//       if (!Auth()->user()->can('domain.create')) {
+//        return abort(401);
+//       }
 
        return view('admin.domain.create');
     }
@@ -79,12 +79,12 @@ class DomainController extends Controller
 
          if (empty($user)) {
              $data['errors']['user']="User Not Found";
-             return response()->json($data,422); 
+             return response()->json($data,422);
          }
 
          if (empty($user->user_domain)) {
-           $domain=new Domain;     
-         }   
+           $domain=new Domain;
+         }
          else{
             $domain=Domain::find($user->user_domain->id);
          }
@@ -99,7 +99,7 @@ class DomainController extends Controller
          $user->save();
 
          $sub_users=User::where('created_by',$user->id)->update(['domain_id'=>$domain->id]);
-         
+
 
          return response()->json(['Domain Created Successfully']);
     }
@@ -113,18 +113,18 @@ class DomainController extends Controller
      */
     public function edit($id)
     {
-       if (!Auth()->user()->can('domain.edit')) {
-        return abort(401);
-       }
+//       if (!Auth()->user()->can('domain.edit')) {
+//        return abort(401);
+//       }
        $info= Domain::with('user')->findorFail($id);
        return view('admin.domain.edit',compact('info'));
     }
 
     public function show(Request $request,$id)
     {
-       if (!Auth()->user()->can('domain.list')) {
-        return abort(401);
-       }
+//       if (!Auth()->user()->can('domain.list')) {
+//        return abort(401);
+//       }
 
        if ($request->type=='email') {
         $this->email=$request->src;
@@ -139,7 +139,7 @@ class DomainController extends Controller
         $posts=Domain::with('user')->where('status',$id)->latest()->paginate(40);
        }
 
-      
+
         $all=Domain::count();
         $actives=Domain::where('status',1)->count();
         $drafts=Domain::where('status',2)->count();
@@ -168,7 +168,7 @@ class DomainController extends Controller
 
          if (empty($user)) {
              $data['errors']['user']="User Not Found";
-             return response()->json($data,422); 
+             return response()->json($data,422);
          }
 
 
@@ -190,10 +190,10 @@ class DomainController extends Controller
      */
     public function destroy(Request $request)
     {
-        if (!Auth()->user()->can('domain.delete')) {
-          return abort(401);
-        }
-       
+//        if (!Auth()->user()->can('domain.delete')) {
+//          return abort(401);
+//        }
+//
         if ($request->ids) {
             if ($request->method != 'delete') {
                 foreach ($request->ids as $id) {
@@ -201,7 +201,7 @@ class DomainController extends Controller
                     $domain->status=$request->method;
                     $domain->save();
                 }
-                
+
             }
             else{
                 foreach ($request->ids as $id) {

@@ -11,11 +11,11 @@
             <table class="table table-striped table-hover text-center table-borderless">
               <thead>
                 <tr>
-                 
+
                   <th>{{ __('Name') }}</th>
                   <th>{{ __('Email') }}</th>
                   <th>{{ __('Domain') }}</th>
-                 
+
                   <th>{{ __('Plan') }}</th>
                   <th>{{ __('Status') }}</th>
                   <th>{{ __('Order at') }}</th>
@@ -25,11 +25,11 @@
               <tbody>
                 @foreach($posts as $row)
                 <tr id="row{{ $row->id }}">
-                
+
                   <td>{{ $row->name }}</td>
                   <td><a href="mailto:{{ $row->email }}">{{ $row->email }}</a></td>
                   <td><a href="{{ $row->user_domain->full_domain ?? '' }}" target="_blank">{{ $row->user_domain->domain ?? '' }}</a></td>
-                 
+
                   <td>{{ $row->user_plan->plan_info->name ?? '' }}</td>
                   <td>
                     @if($row->status==1) <span class="badge badge-success">{{ __('Active') }}</span>
@@ -45,30 +45,29 @@
                         Action
                       </button>
                       <div class="dropdown-menu">
-                       
-                         @can('customer.edit')
-                        <a class="dropdown-item has-icon" href="{{ route('admin.customer.edit',$row->id) }}"><i class="far fa-edit"></i> Edit</a>
-                         @endcan
-                          @can('customer.view')
-                        <a class="dropdown-item has-icon" href="{{ route('admin.customer.show',$row->id) }}"><i class="far fa-eye"></i>View</a>
-                         @endcan
 
-                         <a class="dropdown-item has-icon" href="{{ route('admin.order.create','email='.$row->email) }}"><i class="fas fa-cart-arrow-down"></i>Make Order</a>
 
-                         <a class="dropdown-item has-icon" href="{{ route('admin.customer.show',$row->id) }}"><i class="far fa-envelope"></i>Send Email</a>
+                        <a class="dropdown-item has-icon" href="{{ route('admin.customers.edit',$row->id) }}"><i class="far fa-edit"></i> Edit</a>
+
+                        <a class="dropdown-item has-icon" href="{{ route('admin.customers.show',$row->id) }}"><i class="far fa-eye"></i>View</a>
+
+
+                         <a class="dropdown-item has-icon" href="{{ route('admin.orders.create','email='.$row->email) }}"><i class="fas fa-cart-arrow-down"></i>Make Order</a>
+
+                         <a class="dropdown-item has-icon" href="{{ route('admin.customers.show',$row->id) }}"><i class="far fa-envelope"></i>Send Email</a>
                       </div>
                     </div>
-                   
+
 
                   </td>
                 </tr>
                 @endforeach
               </tbody>
-              
+
            </table>
-           
+
          </div>
-      
+
         {{ $posts->links('vendor.pagination.bootstrap-4') }}
      </div>
    </div>

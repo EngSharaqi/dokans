@@ -1,10 +1,10 @@
 @extends('admin.frontend.app')
 @section('append')
 <div class="card-action-filter">
-	<form method="post" class="basicform_with_reload" action="{{ route('admin.categorie.destroys') }}">
+	<form method="post" class="basicform_with_reload" action="{{ route('admin.categories.destroy') }}">
 		@csrf
 		<div class="row">
-			
+
 			<div class="col-lg-6">
 				<div class="d-flex">
 					<div class="single-filter">
@@ -21,9 +21,9 @@
 					</div>
 				</div>
 			</div>
-			
 
-			
+
+
 			<div class="col-lg-6">
 				<div class="add-new-btn">
 					<a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">{{ __('Add New Testimonial') }}</a>

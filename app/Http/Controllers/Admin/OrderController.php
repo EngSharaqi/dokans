@@ -27,10 +27,10 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        if (!Auth()->user()->can('order.list')) {
-            return abort(401);
-        }
-        
+//        if (!Auth()->user()->can('order.list')) {
+//            return abort(401);
+//        }
+
         $type=$request->status ?? 'all';
         if ($request->status=='cancelled') {
            $type=0;
@@ -63,7 +63,7 @@ class OrderController extends Controller
           }
         else{
             $posts=Userplan::with('user','plan_info','category')->where('status',$type)->latest()->paginate(40);
-          }  
+          }
         }
 
         return view('admin.order.index',compact('type','posts','request'));
@@ -76,9 +76,9 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
-        if (!Auth()->user()->can('order.create')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('order.create')) {
+//            return abort(401);
+//        }
         $payment_getway=\App\Category::where('type','payment_getway')->get();
         $posts=Plan::where('status',1)->get();
         $email=$request->email ?? '';
@@ -93,17 +93,17 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth()->user()->can('order.create')) {
-            return abort(401);
-        }
-       
+//        if (!Auth()->user()->can('order.create')) {
+//            return abort(401);
+//        }
+
         $validatedData = $request->validate([
             'email' => 'required|email|max:255',
             'payment_method' => 'required',
             'transition_id' => 'required',
             'plan' => 'required',
             'notification_status' => 'required',
-            
+
         ]);
 
         if ($request->notification_status == 'yes' && $request->content==null) {
@@ -116,7 +116,7 @@ class OrderController extends Controller
             return response()->json($msg,401);
         }
 
-        
+
         $plan=Plan::findorFail($request->plan);
         $exp_days =  $plan->days;
         $expiry_date = \Carbon\Carbon::now()->addDays(($exp_days))->format('Y-m-d');
@@ -151,7 +151,7 @@ class OrderController extends Controller
         $dom->orderlog()->create(['userplan_id'=>$order->id,'domain_id'=>$dom->id]);
 
 
-        
+
 
          if ($request->notification_status == 'yes'){
             $data['info']=Userplan::with('plan_info','category','user')->find($order->id);
@@ -177,12 +177,12 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        if (!Auth()->user()->can('order.view')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('order.view')) {
+//            return abort(401);
+//        }
         $info=Userplan::with('plan_info','category','user')->findorFail($id);
         $user=User::with('user_domain')->find($info->user->id);
-       
+
         return view('admin.order.show',compact('info','user'));
     }
 
@@ -200,7 +200,7 @@ class OrderController extends Controller
         $company_info=json_decode($company_info->value);
         $pdf = \PDF::loadView('email.subscription_invoicepdf',compact('company_info','info','user'));
         return $pdf->download('invoice.pdf');
-       
+
     }
 
     /**
@@ -211,9 +211,9 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        if (!Auth()->user()->can('order.edit')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('order.edit')) {
+//            return abort(401);
+//        }
 
         $info= Userplan::find($id);
         $payment_getway=\App\Category::where('type','payment_getway')->get();
@@ -250,10 +250,10 @@ class OrderController extends Controller
         $order->payment_status=$request->payment_status;
         $order->save();
         $user=User::find($order->user_id);
-        
+
         if($request->subscription_status == 1){
                 $plan=Plan::find($order->plan_id);
-                
+
                 $exp_days =  $plan->days;
                 $expiry_date = \Carbon\Carbon::now()->addDays(($exp_days))->format('Y-m-d');
                 $dom=Domain::where('user_id',$order->user_id)->first();
@@ -295,9 +295,9 @@ class OrderController extends Controller
      */
     public function destroy(Request $request)
     {
-        if (!Auth()->user()->can('order.delete')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('order.delete')) {
+//            return abort(401);
+//        }
 
         if ($request->ids && !empty($request->method)) {
             if ($request->method=='delete') {
@@ -324,8 +324,8 @@ class OrderController extends Controller
         return response()->json(['Success']);
     }
 
-    public function __construct()
-    {
-        abort_if(!Route::has('admin.order.index'),404);
-    }
+//    public function __construct()
+//    {
+//        abort_if(!Route::has('admin.order.index'),404);
+//    }
 }

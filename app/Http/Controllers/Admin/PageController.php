@@ -19,14 +19,14 @@ class PageController extends Controller
     public function index(Request $request)
     {
 
-        if (!Auth()->user()->can('page.list')) {
-            abort(401);
-        }    
+//        if (!Auth()->user()->can('page.list')) {
+//            abort(401);
+//        }
 
        $pages=Term::where('type','page')->where('is_admin',1)->latest()->paginate(20);
-       
+
        return view('admin.page.index',compact('pages'));
-      
+
     }
 
     /**
@@ -36,9 +36,9 @@ class PageController extends Controller
      */
     public function create()
     {
-         if (!Auth()->user()->can('page.create')) {
-            abort(401);
-        }
+//         if (!Auth()->user()->can('page.create')) {
+//            abort(401);
+//        }
         return view('admin.page.create');
     }
 
@@ -52,7 +52,7 @@ class PageController extends Controller
     {
 
         $validatedData = $request->validate([
-            'title' => 'required|max:100', 
+            'title' => 'required|max:100',
         ]);
 
 
@@ -72,7 +72,7 @@ class PageController extends Controller
         $post->type='page';
         $post->is_admin=1;
         $post->user_id=Auth::id();
-        
+
         $post->save();
 
         $post_meta = new Meta;
@@ -86,11 +86,11 @@ class PageController extends Controller
         $post_meta->key='content';
         $post_meta->value=$request->content;
         $post_meta->save();
-       
-        return redirect('/admin/page');
+
+        return redirect('/admin/pages');
     }
 
-   
+
 
     /**
      * Show the form for editing the specified resource.
@@ -100,10 +100,10 @@ class PageController extends Controller
      */
     public function edit($id)
     {
-         if (!Auth()->user()->can('page.edit')) {
-            abort(401);
-        }
-      $info=Term::with('excerpt','content')->find($id);   
+//         if (!Auth()->user()->can('page.edit')) {
+//            abort(401);
+//        }
+      $info=Term::with('excerpt','content')->find($id);
 
        return view('admin.page.edit',compact('info'));
     }
@@ -119,10 +119,10 @@ class PageController extends Controller
     {
 
         $validatedData = $request->validate([
-            'title' => 'required|max:255',    
+            'title' => 'required|max:255',
         ]);
 
-       
+
         $post= Term::find($id);
         $post->title=$request->title;
         $post->status=$request->status;
@@ -135,15 +135,15 @@ class PageController extends Controller
         $post_meta->value=$request->excerpt;
         $post_meta->save();
        // }
-       
+
         $postdetail= Meta::where('term_id',$id)->where('key','content')->first();
        // if (!empty($postdetail)) {
         $postdetail->term_id=$post->id;
         $postdetail->key='content';
         $postdetail->value=$request->content;
-        $postdetail->save(); 
+        $postdetail->save();
        // }
-             
+
          return redirect('/admin/page');
     }
 
@@ -155,16 +155,16 @@ class PageController extends Controller
      */
     public function destroy(Request $request)
     {
-       
+
           if ($request->status=='publish') {
             if ($request->ids) {
 
                 foreach ($request->ids as $id) {
                     $post=Term::find($id);
                     $post->status=1;
-                    $post->save();   
+                    $post->save();
                 }
-                    
+
             }
         }
         elseif ($request->status=='trash') {
@@ -172,16 +172,16 @@ class PageController extends Controller
                 foreach ($request->ids as $id) {
                     $post=Term::find($id);
                     $post->status=0;
-                    $post->save();   
+                    $post->save();
                 }
-                    
+
             }
         }
         elseif ($request->status=='delete') {
             if ($request->ids) {
                 foreach ($request->ids as $id) {
                    Term::destroy($id);
-                   
+
                 }
             }
         }

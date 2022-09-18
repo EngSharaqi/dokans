@@ -9,22 +9,22 @@
       <div class="card-body">
         <div class="row mb-2">
           <div class="col-sm-8">
-            <a href="{{ route('admin.customer.index') }}" class="mr-2 btn btn-outline-primary @if($type==="all") active @endif">{{ __('All') }} ({{ $all }})</a>
+            <a href="{{ route('admin.customers.index') }}" class="mr-2 btn btn-outline-primary @if($type==="all") active @endif">{{ __('All') }} ({{ $all }})</a>
 
-            <a href="{{ route('admin.customer.index','type=1') }}" class="mr-2 btn btn-outline-success @if($type==1) active @endif">{{ __('Active') }} ({{ $actives }})</a>
+            <a href="{{ route('admin.customers.index','type=1') }}" class="mr-2 btn btn-outline-success @if($type==1) active @endif">{{ __('Active') }} ({{ $actives }})</a>
 
-            <a href="{{ route('admin.customer.index','type=2') }}" class="mr-2 btn btn-outline-warning @if($type==2) active @endif">{{ __('Suspened') }} ({{ $suspened }})</a>
+            <a href="{{ route('admin.customers.index','type=2') }}" class="mr-2 btn btn-outline-warning @if($type==2) active @endif">{{ __('Suspened') }} ({{ $suspened }})</a>
 
-             <a href="{{ route('admin.customer.index','type=3') }}" class="mr-2 btn btn-outline-warning @if($type==3) active @endif">{{ __('Pending') }} ({{ $pendings }})</a>
+             <a href="{{ route('admin.customers.index','type=3') }}" class="mr-2 btn btn-outline-warning @if($type==3) active @endif">{{ __('Pending') }} ({{ $pendings }})</a>
 
 
-            <a href="{{ route('admin.customer.index','type=trash') }}" class="mr-2 btn btn-outline-danger @if($type === 0) active @endif">{{ __('Trash') }} ({{ $trash }})</a>
+            <a href="{{ route('admin.customers.index','type=trash') }}" class="mr-2 btn btn-outline-danger @if($type === 0) active @endif">{{ __('Trash') }} ({{ $trash }})</a>
           </div>
 
           <div class="col-sm-4 text-right">
-            @can('customer.create')
-            <a href="{{ route('admin.customer.create') }}" class="btn btn-primary">{{ __('Create Customer') }}</a>
-            @endcan
+
+            <a href="{{ route('admin.customers.create') }}" class="btn btn-primary">{{ __('Create Customer') }}</a>
+
           </div>
         </div>
 
@@ -40,17 +40,17 @@
                 <option value="email">{{ __('Search By User Mail') }}</option>
 
               </select>
-              <div class="input-group-append">                                            
+              <div class="input-group-append">
                 <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
               </div>
             </div>
           </form>
         </div>
 
-        <form method="post" action="{{ route('admin.customers.destroys') }}" class="basicform_with_reload">
+        <form method="post" action="{{ route('admin.customers.destroy') }}" class="basicform_with_reload">
           @csrf
           <div class="float-left mb-1">
-            @can('customer.delete')
+
             <div class="input-group">
               <select class="form-control selectric" name="method">
                 <option value="" >{{ __('Select Action') }}</option>
@@ -64,13 +64,13 @@
                 <option value="delete" >{{ __('Delete Permanently') }}</option>
                 @endif
               </select>
-              <div class="input-group-append">                                            
+              <div class="input-group-append">
                 <button class="btn btn-primary basicbtn" type="submit">{{ __('Submit') }}</button>
               </div>
             </div>
-            @endcan
+
           </div>
-          
+
 
           <div class="table-responsive">
             <table class="table table-striped table-hover text-center table-borderless">
@@ -111,22 +111,22 @@
                         {{ __('Action') }}
                       </button>
                       <div class="dropdown-menu">
-                       
-                         @can('customer.edit')
-                        <a class="dropdown-item has-icon" href="{{ route('admin.customer.edit',$row->id) }}"><i class="fas fa-user-edit"></i> {{ __('Edit') }}</a>
 
-                        <a class="dropdown-item has-icon" href="{{ route('admin.customer.planedit',$row->id) }}"><i class="far fa-edit"></i> {{ __('Edit Plan Info') }}</a>
-                         @endcan
-                          @can('customer.view')
-                        <a class="dropdown-item has-icon" href="{{ route('admin.customer.show',$row->id) }}"><i class="far fa-eye"></i>{{ __('View') }}</a>
-                         @endcan
 
-                         <a class="dropdown-item has-icon" href="{{ route('admin.order.create','email='.$row->email) }}"><i class="fas fa-cart-arrow-down"></i>{{ __('Make Order') }}</a>
+                        <a class="dropdown-item has-icon" href="{{ route('admin.customers.edit',$row->id) }}"><i class="fas fa-user-edit"></i> {{ __('Edit') }}</a>
 
-                         <a class="dropdown-item has-icon" href="{{ route('admin.customer.show',$row->id) }}"><i class="far fa-envelope"></i>{{ __('Send Email') }}</a>
+                        <a class="dropdown-item has-icon" href="{{ route('admin.customers.planedit',$row->id) }}"><i class="far fa-edit"></i> {{ __('Edit Plan Info') }}</a>
+
+
+                        <a class="dropdown-item has-icon" href="{{ route('admin.customers.show',$row->id) }}"><i class="far fa-eye"></i>{{ __('View') }}</a>
+
+
+                         <a class="dropdown-item has-icon" href="{{ route('admin.orders.create','email='.$row->email) }}"><i class="fas fa-cart-arrow-down"></i>{{ __('Make Order') }}</a>
+
+                         <a class="dropdown-item has-icon" href="{{ route('admin.customers.show',$row->id) }}"><i class="far fa-envelope"></i>{{ __('Send Email') }}</a>
                       </div>
                     </div>
-                   
+
 
                   </td>
                 </tr>
@@ -147,7 +147,7 @@
                </tr>
              </tfoot>
            </table>
-           
+
          </div>
        </form>
         {{ $posts->appends($request->all())->links('vendor.pagination.bootstrap-4') }}

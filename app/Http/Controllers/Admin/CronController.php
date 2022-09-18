@@ -26,8 +26,8 @@ class CronController extends Controller
     public function makeExpireAbleCustomer()
     {
     	$users=Userplan::where('status',1)->with('user_with_domain','plan_info')->where('will_expired','<=',date('Y-m-d'))->latest()->get();
-        
-       
+
+
         $option=Option::where('key','company_info')->first();
         $company_info=json_decode($option->value);
         $auto_plan=Plan::where('is_default',1)->first();
@@ -35,7 +35,7 @@ class CronController extends Controller
                 'status'=>3
             ]);
                if(!empty($auto_plan) && $this->auto_plan_assign == true){
-           
+
             $meta['name']=$auto_plan->name;
             $meta['product_limit']=$auto_plan->product_limit;
             $meta['storage']=$auto_plan->storage;
@@ -44,22 +44,22 @@ class CronController extends Controller
             $meta['location_limit']=$auto_plan->location_limit;
             $meta['brand_limit']=$auto_plan->brand_limit;
             $meta['variation_limit']=$auto_plan->variation_limit;
-            
+
             $active_has_order= Userplanmeta::with('activeorder')->get();
             foreach ($active_has_order as $key => $value) {
 
                if($value->activeorder == null){
-               
+
                 Userplanmeta::where('id',$value->id)->update($meta);
                }
            }
-            
+
         }
-        
+
     	if ($this->sendMailToExpiredCustomer == true) {
-            
+
     		foreach ($users as $key => $row) {
-                
+
                 $customer_email=$row->user_with_domain->email;
                 $customer_name=$row->user_with_domain->name;
                 $plan_name=$row->plan_info->name;
@@ -88,13 +88,13 @@ class CronController extends Controller
 
             }
     	}
-    	
 
-        
 
-    	
 
-    	
+
+
+
+
     }
 
 
@@ -131,7 +131,7 @@ class CronController extends Controller
 
     	 }
     	}
-    	
+
 
     }
 
@@ -145,9 +145,9 @@ class CronController extends Controller
         if ($cron_info->send_notification_expired_date == 'yes') {
            $this->auto_plan_assign = true;
         }
-        
+
     	$this->makeExpireAbleCustomer();
-    	
+
     }
 
     public function run_SendMailToWillExpirePlanWithInDay()
@@ -160,7 +160,7 @@ class CronController extends Controller
     public function reset_product_price(){
         $start=Price::where('starting_date','<=',date('Y-m-d'))->where('special_price','!=',null)->get();
         foreach($start as $row){
-         
+
             if($row->price_type == 1){
                 $price=$row->regular_price-$row->special_price;
             }
@@ -184,20 +184,20 @@ class CronController extends Controller
             $price->starting_date=null;
             $price->ending_date=null;
             $price->save();
-        } 
-        return response()->json('success');   
+        }
+        return response()->json('success');
     }
 
 
     public function index()
     {
-        
-        if (!Auth()->user()->can('cron_job.control')) {
-            return abort(401);
-        }
+//
+//        if (!Auth()->user()->can('cron_job.control')) {
+//            return abort(401);
+//        }
         $option=Option::where('key','cron_info')->first();
         $info=json_decode($option->value);
-       
+
        return view('admin.cron.index',compact('info'));
     }
 
@@ -214,15 +214,15 @@ class CronController extends Controller
          $cron_option = json_decode($option->value);
 
          $date= Carbon::now()->addDays($cron_option->days)->format('Y-m-d');
-         
+
          $tenants=Tenant::where([['status',1],['will_expire','<=',$date],['auto_renew',0],['will_expire','!=',Carbon::now()->format('Y-m-d')]])->with('orderwithplan','user')->get();
-         
-        
+
+
          $expireable_tenants=[];
 
          foreach($tenants as $row){
             $plan=$row->orderwithplan->plan;
-            
+
             if (!empty($plan)) {
                 if($row->orderwithplan->plan->is_trial == 0){
                    $order_info['email']=$row->user->email;
@@ -233,15 +233,15 @@ class CronController extends Controller
                    $order_info['amount']=$plan->price;
                    $order_info['plan_name']=$plan->name;
                    array_push($expireable_tenants, $order_info);
-                  
+
                }
-               
+
             }
          }
-         
+
 
          $this->expireSoon($expireable_tenants,$cron_option->alert_message);
-        
+
          return "success";
     }
 

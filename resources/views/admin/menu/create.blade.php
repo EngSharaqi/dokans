@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row" id="category_body">
-	<div class="col-lg-4">      
+	<div class="col-lg-4">
 		<div class="card">
 			<div class="card-body">
 				<div class="alert alert-danger none">
@@ -13,7 +13,7 @@
 					<ul id="success">
 					</ul>
 				</div>
-				<form id="basicform" method="post" action="{{ route('admin.menu.store') }}">
+				<form id="basicform" method="post" action="{{ route('admin.menus.store') }}">
 					@csrf
 					<div class="custom-form">
 						<div class="form-group">
@@ -24,7 +24,7 @@
 							<label for="position">{{ __('Menu Position') }}</label>
 							<select class="custom-select mr-sm-2" id="position" name="position">
 								@if(!empty($positions))
-								
+
 								@foreach($positions as $key=>$row)
 								<option value="{{ $key }}">{{ $row }}</option>
 								@endforeach
@@ -42,7 +42,7 @@
 								@endforeach
 							</select>
 						</div>
-						
+
 						<div class="form-group">
 							<label for="position">{{ __('Menu Status') }}</label>
 							<select class="custom-select mr-sm-2" id="status" name="status">
@@ -55,17 +55,17 @@
 						</div>
 					</div>
 				</form>
-				
+
 			</div>
 		</div>
 	</div>
 
-	<div class="col-lg-8" >      
+	<div class="col-lg-8" >
 		<div class="card">
 			<div class="card-body">
 				<div class="table-responsive">
 					<div class="card-action-filter">
-						<form id="basicform1" method="post" action="{{ route('admin.menues.destroy') }}">
+						<form id="basicform1" method="post" action="{{ route('admin.menus.destroy') }}">
 							@csrf
 							<div class="card-filter-content d-flex">
 								<div class="single-filter">
@@ -113,13 +113,13 @@
 									<td>{{ $menu->position }}</td>
 									<td>{{ $menu->lang }}</td>
 									<td>@if($menu->status==1) <p class="badge badge-success">{{ __('Active Menu') }}</p> @else <p class="badge badge-danger">{{ __('Draft Menu') }}</p> @endif</td>
-									
-									<td><a href="{{ route('admin.menu.show',$menu->id) }}"><i class="fas fa-arrows-alt"></i> {{ __('Customize') }}</a></td>
-									<td><a  class="text-success" href="{{ route('admin.menu.edit',$menu->id) }}" ><i class="far fa-edit"></i></a></td>
+
+									<td><a href="{{ route('admin.menus.show',$menu->id) }}"><i class="fas fa-arrows-alt"></i> {{ __('Customize') }}</a></td>
+									<td><a  class="text-success" href="{{ route('admin.menus.edit',$menu->id) }}" ><i class="far fa-edit"></i></a></td>
 								</tr>
 								@endforeach
 							</tbody>
-						</form>	
+						</form>
 						<tfoot>
 							<tr>
 								<th class="am-select">
@@ -142,7 +142,7 @@
 		</div>
 	</div>
 </div>
-</div>				
+</div>
 @endsection
 @push('js')
 <script src="{{ asset('assets/js/form.js') }}"></script>

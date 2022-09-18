@@ -7,64 +7,64 @@
 	<div class="col-12 mt-2">
 		<div class="card">
 			<div class="card-body">
-				<form method="post" action="{{ route('admin.plan.store') }}" class="basicform_with_reset">
+				<form method="post" action="{{ route('admin.plans.store') }}" class="basicform_with_reset">
 					@csrf
 					<div class="row">
 						<div class="col-sm-8">
 							<div class="form-group">
 								<label>{{ __('Plan Name') }}</label>
-								<input type="text" name="name" class="form-control" required> 
+								<input type="text" name="name" class="form-control" required>
 							</div>
 
 							<div class="form-group">
 								<label>{{ __('Plan description') }}</label>
-								<input type="text" name="description" class="form-control" required> 
-								
-							</div> 
+								<input type="text" name="description" class="form-control" required>
+
+							</div>
 
 
 							<div class="form-group">
 								<label>{{ __('Plan Price') }}</label>
-								<input type="number" step="any" name="price" class="form-control" required> 
+								<input type="number" step="any" name="price" class="form-control" required>
 							</div>
-							
+
 
 							<div class="form-group">
 								<label>{{ __('Product Limit') }}</label>
-								<input type="number"  name="product_limit" class="form-control" required> 
+								<input type="number"  name="product_limit" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>{{ __('Storage Limit') }} (MB)</label>
-								<input type="number"  name="storage" class="form-control" required> 
+								<input type="number"  name="storage" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>{{ __('Customer Limit') }}</label>
-								<input type="number"  name="customer_limit" class="form-control" required> 
+								<input type="number"  name="customer_limit" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>{{ __('Category Limit') }}</label>
-								<input type="number"  name="category_limit" class="form-control" required> 
+								<input type="number"  name="category_limit" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>{{ __('Location Limit') }}</label>
-								<input type="number"  name="location_limit" class="form-control" required> 
+								<input type="number"  name="location_limit" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>{{ __('Brand Limit') }}</label>
-								<input type="number"  name="brand_limit" class="form-control" required> 
+								<input type="number"  name="brand_limit" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>{{ __('Variation Limit') }}</label>
-								<input type="number"  name="variation_limit" class="form-control" required> 
+								<input type="number"  name="variation_limit" class="form-control" required>
 							</div>
-							
+
 
 							<div class="form-group">
 								<button class="btn btn-primary basicbtn" type="submit" >{{ __('Save') }}</button>
 							</div>
 						</div>
 						<div class="col-sm-4">
-							
+
 							<div class="form-group">
 								<label>{{ __('Duration') }}</label>
 								<select class="form-control" name="days">
@@ -129,8 +129,8 @@
 									<option value=false>{{ __('Disable') }}</option>
 								</select>
 							</div>
-							
-							
+
+
 							<div class="form-group">
 								<label>{{ __('Facebook Pixel') }}</label>
 								<select class="form-control" name="facebook_pixel">
@@ -166,7 +166,7 @@
 									<option value=false>{{ __('Disable') }}</option>
 								</select>
 							</div>
-							
+
 							<div class="form-group">
 								<label>{{ __('Is Featured ?') }}</label>
 								<select class="form-control" name="featured">
@@ -174,8 +174,15 @@
 									<option value="1">{{ __('Yes') }}</option>
 								</select>
 							</div>
-							
-							
+
+                            <div class="form-group">
+                                <label>{{ __('Lang') }}</label>
+                                <select class="form-control" name="lang">
+                                    <option value="en">{{ __('En') }}</option>
+                                    <option value="ar">{{ __('Ar') }}</option>
+                                </select>
+                            </div>
+
 							<div class="form-group">
 								<label>{{ __('Status') }}</label>
 								<select class="form-control" name="status">
@@ -184,7 +191,7 @@
 								</select>
 							</div>
 						</div>
-					</div>					
+					</div>
 				</form>
 			</div>
 		</div>

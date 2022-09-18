@@ -12,16 +12,16 @@ class ReportController extends Controller
 {
 	public function index(Request $request)
 	{
-		if (!Auth()->user()->can('report.view')) {
-			abort(401);
-		}
+//		if (!Auth()->user()->can('report.view')) {
+//			abort(401);
+//		}
 		abort_if(!Route::has('admin.plan.index'),404);
 		if ($request->start) {
 			$start = date("Y-m-d",strtotime($request->start));
 			$end = date("Y-m-d",strtotime($request->end));
 
 			$order_count=Userplan::whereBetween('created_at',[$start,$end])->count();
-			
+
 			$order_expired=Userplan::whereBetween('created_at',[$start,$end])->where('status',3)->count();
 			$order_sum=Userplan::whereBetween('created_at',[$start,$end])->whereHas('category',function($q){
 				return $q->where('status',1);
@@ -33,7 +33,7 @@ class ReportController extends Controller
 		}
 		else{
 		$order_count=Userplan::count();
-		
+
 		$order_expired=Userplan::where('status',3)->count();
 		$order_sum=Userplan::whereHas('category',function($q){
 			return $q->where('status',1);
@@ -41,9 +41,9 @@ class ReportController extends Controller
 		$order_tax=Userplan::whereHas('category',function($q){
 			return $q->where('status',1);
 		})->sum('tax');
-		$posts=Userplan::with('plan_info','category')->latest()->paginate(40);	
+		$posts=Userplan::with('plan_info','category')->latest()->paginate(40);
 		}
-		
+
 
 		$start = $start ?? '';
 		$end = $end ?? '';

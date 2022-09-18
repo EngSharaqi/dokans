@@ -8,7 +8,7 @@
 				<h4>{{ __('Roles') }}</h4>
 			</div>
 			<div class="col-lg-6">
-				
+
 			</div>
 		</div>
 		<br>
@@ -22,7 +22,7 @@
 								<div class="form-group">
 									<select class="form-control selectric" name="status">
 										<option value="publish">{{ __('Select Action') }}</option>
-										
+
 										<option value="delete">{{ __('Delete Permanently') }}</option>
 
 									</select>
@@ -34,11 +34,11 @@
 						</div>
 					</div>
 					<div class="col-lg-6">
-						@can('role.create')
+{{--						@can('role.create')--}}
 						<div class="add-new-btn">
 							<a href="{{ route('admin.role.create') }}" class="btn btn-primary float-right">{{ __('Add New Role') }}</a>
 						</div>
-						@endcan
+{{--						@endcan--}}
 					</div>
 				</div>
 			</div>

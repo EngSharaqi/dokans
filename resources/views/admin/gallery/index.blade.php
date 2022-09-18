@@ -4,32 +4,32 @@
 <div class="">
 	<div class="row justify-content-center">
 		<div class="col-12">
-			
+
 			<div class="card">
 				<div class="card-body">
-					
 
-					<form method="post" action="{{ route('admin.galleries.destroys') }}" class="basicform_with_reload">
+
+					<form method="post" action="{{ route('admin.galleries.destroy') }}" class="basicform_with_reload">
 						@csrf
 						<div class="float-left mb-1">
-							@can('order.delete')
+{{--							@can('order.delete')--}}
 							<div class="input-group">
 								<select class="form-control selectric" name="status">
 									<option value="" >{{ __('Select Action') }}</option>
-					
+
 									<option value="delete" >{{ __('Delete Permanently') }}</option>
-									
+
 								</select>
-								<div class="input-group-append">                                            
+								<div class="input-group-append">
 									<button class="btn btn-primary basicbtn" type="submit">{{ __('Submit') }}</button>
 								</div>
 							</div>
-							@endcan
+{{--							@endcan--}}
 						</div>
 						<div class="float-right mb-1">
-							@can('gallery.create')
+{{--							@can('gallery.create')--}}
 							<a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#exampleModal">{{ __('Create Gallery') }}</a>
-							@endcan
+{{--							@endcan--}}
 						</div>
 
 						<div class="table-responsive">
@@ -40,7 +40,7 @@
 
 										<th class="text-left"><i class="fa fa-image"></i></th>
 										<th>{{ __('URl') }}</th>
-										
+
 									</tr>
 								</thead>
 								<tbody class="list font-size-base rowlink" data-link="row">
@@ -49,7 +49,7 @@
 										<td class="text-left"><input type="checkbox" name="ids[]" value="{{ $row->id }}"></td>
 										<td><img class="float-left text-left" src="{{ asset($row->preview->content) }}" height="100"></td>
 										<td>{{ $row->name }}</td>
-									</tr>		
+									</tr>
 									@endforeach
 								</tbody>
 							</table>
@@ -62,7 +62,7 @@
 				</div>
 			</div>
 		</div>
-	</div>   
+	</div>
 </div>
 
 <!-- Modal -->
@@ -76,7 +76,7 @@
         </button>
       </div>
       <div class="modal-body">
-      <form method="post" class="basicform_with_reload" action="{{ route('admin.gallery.store') }}" enctype="multipart/form-data">
+      <form method="post" class="basicform_with_reload" action="{{ route('admin.galleries.store') }}" enctype="multipart/form-data">
       	<div class="form-group">
       		<label>{{ __('Url') }}</label>
       		<input type="text" required="" name="name" class="form-control">
@@ -85,7 +85,7 @@
       		<label>{{ __('Image File') }}</label>
       		<input type="file" required="" accept="image/*" name="file" class="form-control">
       	</div>
-      
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>

@@ -17,14 +17,14 @@ class PaymentController extends Controller
      */
     public function index()
     {
-         if (!Auth()->user()->can('payment_gateway.config')) {
-            abort(401);
-          }  
+//         if (!Auth()->user()->can('payment_gateway.config')) {
+//            abort(401);
+//          }
         $posts=Category::where('type','payment_getway')->with('preview')->withCount('gateway_users')->get();
         return view('admin.payment_gateway.index',compact('posts'));
     }
 
-    
+
 
     /**
      * Display the specified resource.
@@ -34,16 +34,16 @@ class PaymentController extends Controller
      */
     public function show($slug)
     {
-         if (!Auth()->user()->can('payment_gateway.config')) {
-            abort(401);
-        } 
+//         if (!Auth()->user()->can('payment_gateway.config')) {
+//            abort(401);
+//        }
         $info=Category::with('description','preview','credentials')->where('type','payment_getway')->where('slug',$slug)->first();
         $credentials=json_decode($info->credentials->content ?? '');
 
         return view('admin.payment_gateway.edit',compact('info','info','credentials'));
     }
 
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -58,23 +58,23 @@ class PaymentController extends Controller
             'title' => 'required|max:20',
             'description' => 'required|max:200',
             'file' => 'image',
-            
+
         ]);
 
        $info=Category::find($id);
        $info->name=$request->title;
-      
+
        $info->featured=$request->status ?? 1;
-      
+
        $info->save();
 
        $meta=Categorymeta::where('category_id',$id)->where('type','description')->first();
        $meta->content=$request->description;
        $meta->save();
 
-       
+
        if ($info->slug != 'cod') {
-          
+
        $credentials=Categorymeta::where('category_id',$id)->where('type','credentials')->first();
        if (empty($credentials)) {
            $credentials=new Categorymeta;
@@ -106,7 +106,7 @@ class PaymentController extends Controller
         if ($info->slug=='toyyibpay') {
          $data['userSecretKey']=$request->userSecretKey;
          $data['categoryCode']=$request->categoryCode;
-        } 
+        }
 
         if ($info->slug=='mollie') {
          $data['api_key']=$request->api_key;
@@ -120,7 +120,7 @@ class PaymentController extends Controller
         if ($info->slug=='mercado') {
          $data['public_key']=$request->public_key;
          $data['access_token']=$request->access_token;
-         
+
         }
 
 
@@ -146,8 +146,8 @@ class PaymentController extends Controller
 
     }
 
-    public function __construct()
-    {
-        abort_if(!Route::has('admin.payment-geteway.index'),404);
-    }
+//    public function __construct()
+//    {
+//        abort_if(!Route::has('admin.payment-geteway.index'),404);
+//    }
 }

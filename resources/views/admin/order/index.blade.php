@@ -9,25 +9,25 @@
 					<div class="col-sm-10">
 						<ul class="nav nav-pills">
 							<li class="nav-item">
-								<a class="nav-link @if($type==='all') active @endif" href="{{ route('admin.order.index') }}">{{ __('All') }}</a>
+								<a class="nav-link @if($type==='all') active @endif" href="{{ route('admin.orders.index') }}">{{ __('All') }}</a>
 							</li>
 
 							<li class="nav-item">
-								<a  href="{{ route('admin.order.index','status=2') }}" class="nav-link @if($type==2) active @endif">{{ __('Pending') }}</a>
+								<a  href="{{ route('admin.orders.index','status=2') }}" class="nav-link @if($type==2) active @endif">{{ __('Pending') }}</a>
 							</li>
 							<li class="nav-item">
-								<a  href="{{ route('admin.order.index','status=3') }}" class="nav-link @if($type==3) active @endif">{{ __('Expired') }}</a>
+								<a  href="{{ route('admin.orders.index','status=3') }}" class="nav-link @if($type==3) active @endif">{{ __('Expired') }}</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link @if($type===0) active @endif" href="{{ route('admin.order.index','status=cancelled') }}">{{ __('Cancelled') }}</a>
+								<a class="nav-link @if($type===0) active @endif" href="{{ route('admin.orders.index','status=cancelled') }}">{{ __('Cancelled') }}</a>
 							</li>
-							
+
 						</ul>
 					</div>
 					<div class="col-sm-2">
-						@can('order.create')
-						<a href="{{ route('admin.order.create') }}" class="btn btn-primary float-right">{{ __('Create order') }}</a>
-						@endcan
+{{--						@can('order.create')--}}
+						<a href="{{ route('admin.orders.create') }}" class="btn btn-primary float-right">{{ __('Create order') }}</a>
+{{--						@endcan--}}
 					</div>
 				</div>
 			</div>
@@ -44,21 +44,21 @@
 									<option value="email">{{ __('Search By User Mail') }}</option>
 
 								</select>
-								<div class="input-group-append">                                            
+								<div class="input-group-append">
 									<button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
 								</div>
 							</div>
 						</form>
 					</div>
 
-					<form method="post" action="{{ route('admin.orders.destroys') }}" class="basicform">
+					<form method="post" action="{{ route('admin.orders.destroy') }}" class="basicform">
 						@csrf
 						<div class="float-left mb-1">
-							@can('order.delete')
+{{--							@can('order.delete')--}}
 							<div class="input-group">
 								<select class="form-control selectric" name="method">
 									<option value="" >{{ __('Select Action') }}</option>
-									
+
 									<option value="2" >{{ __('Move To Pending') }}</option>
 									@if($type !== 0)
 									<option value="cancelled" >{{ __('Move To Cancelled') }}</option>
@@ -67,11 +67,11 @@
 									<option value="delete" >{{ __('Delete Permanently') }}</option>
 									@endif
 								</select>
-								<div class="input-group-append">                                            
+								<div class="input-group-append">
 									<button class="btn btn-primary basicbtn" type="submit">{{ __('Submit') }}</button>
 								</div>
 							</div>
-							@endcan
+{{--							@endcan--}}
 						</div>
 
 						<div class="table-responsive">
@@ -95,9 +95,9 @@
 									@foreach($posts ?? [] as $key => $row)
 									<tr>
 										<td class="text-left"><input type="checkbox" name="ids[]" value="{{ $row->id }}"></td>
-										<td class="text-left"><a href="{{ route('admin.order.invoice',$row->id) }}">{{ $row->order_no }}</a></td>
+										<td class="text-left"><a href="{{ route('admin.orders.invoice',$row->id) }}">{{ $row->order_no }}</a></td>
 										<td>{{ $row->created_at->format('d-F-Y') }}</td>
-										<td><a href="{{ route('admin.customer.show',$row->user->id) }}">{{ $row->user->name }}</a></td>
+										<td><a href="{{ route('admin.customers.show',$row->user->id) }}">{{ $row->user->name }}</a></td>
 										<td>{{ amount_format($row->amount) }}</td>
 										<td>{{ number_format($row->tax,2) }}</td>
 										<td>{{ $row->category->name ?? '' }}</td>
@@ -120,13 +120,12 @@
 												{{ __('Action') }}
 											</button>
 											<div class="dropdown-menu">
-												<a class="dropdown-item has-icon" href="{{ route('admin.order.edit',$row->id) }}"><i class="far fa-edit"></i> {{ __('Edit') }}</a>
-												<a class="dropdown-item has-icon" href="{{ route('admin.order.show',$row->id) }}"><i class="far fa-eye"></i> {{ __('View') }}</a>
-												<a class="dropdown-item has-icon" href="{{ route('admin.order.invoice',$row->id) }}"><i class="fa fa-file-invoice"></i> {{ __('Download Invoice') }}</a>
-
+												<a class="dropdown-item has-icon" href="{{ route('admin.orders.edit',$row->id) }}"><i class="far fa-edit"></i> {{ __('Edit') }}</a>
+												<a class="dropdown-item has-icon" href="{{ route('admin.orders.show',$row->id) }}"><i class="far fa-eye"></i> {{ __('View') }}</a>
+												<a class="dropdown-item has-icon" href="{{ route('admin.orders.invoice',$row->id) }}"><i class="fa fa-file-invoice"></i> {{ __('Download Invoice') }}</a>
 											</div>
 										</div></td>
-									</tr>	
+									</tr>
 									@endforeach
 								</tbody>
 							</table>
@@ -139,7 +138,7 @@
 				</div>
 			</div>
 		</div>
-	</div>   
+	</div>
 </div>
 @endsection
 @push('js')

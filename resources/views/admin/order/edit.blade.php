@@ -12,7 +12,7 @@
 			</div>
 			<div class="card-body">
 
-				<form class="basicform" action="{{ route('admin.order.update',$info->id) }}" method="post">
+				<form class="basicform" action="{{ route('admin.orders.update',$info->id) }}" method="post">
 					@csrf
 					@method('PUT')
 
@@ -29,7 +29,7 @@
 						<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" >{{ __('Transaction Method') }}</label>
 						<div class="col-sm-12 col-md-7">
 							<select class="form-control" name="category_id">
-								
+
 								@foreach($payment_getway as $row)
 								<option value="{{ $row->id }}" @if($info->category_id == $row->id) selected="" @endif>{{ $row->name }}</option>
 								@endforeach
@@ -64,7 +64,7 @@
 							@endphp
 							<select class="form-control" name="payment_status">
 								<option value="1" @if($payment_status==1) selected="" @endif>{{ __('Complete') }}</option>
-								
+
 								<option value="2" @if($payment_status==2) selected="" @endif>{{ __('Pending') }}</option>
 
 								<option value="0" @if($payment_status==0) selected="" @endif>{{ __('Decline') }}</option>
@@ -125,9 +125,9 @@
 							<textarea class="form-control" name="content"></textarea>
 						</div>
 					</div>
-					
 
-					
+
+
 
 					<div class="form-group row mb-4">
 						<label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>

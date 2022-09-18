@@ -16,9 +16,9 @@ class LanguageController extends Controller
      */
     public function index()
     {
-        if (!Auth()->user()->can('language_edit')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('language_edit')) {
+//            return abort(401);
+//        }
         $posts=Option::where('key','languages')->first();
         $actives=Option::where('key','active_languages')->first();
 
@@ -33,9 +33,9 @@ class LanguageController extends Controller
 
         }
         else{
-           $actives=[]; 
+           $actives=[];
         }
-       
+
         return view('admin.language.index',compact('posts','actives'));
     }
 
@@ -46,9 +46,9 @@ class LanguageController extends Controller
      */
     public function create()
     {
-        if (!Auth()->user()->can('language_edit')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('language_edit')) {
+//            return abort(401);
+//        }
         $posts=base_path('langlist.json');
         $posts=file_get_contents($posts);
         $posts=json_decode($posts);
@@ -68,7 +68,7 @@ class LanguageController extends Controller
             'language_name' => 'required',
         ]);
 
-       
+
         $file=base_path('resources/lang/default.json');
         $file=file_get_contents($file);
         \File::put(base_path('resources/lang/'.$request->language.'.json'),$file);
@@ -82,9 +82,9 @@ class LanguageController extends Controller
                 $arr[$key]=$value;
             }
         }
-             
+
         $arr[$request->language]=$request->language_name;
-           
+
         if (empty($langlist)) {
            $langlist=new Option;
            $langlist->key='languages';
@@ -92,7 +92,7 @@ class LanguageController extends Controller
         $langlist->value=json_encode($arr);
         $langlist->save();
 
-        return redirect('/admin/language/'.$request->language);
+        return redirect('/admin/languages/'.$request->language);
 
     }
 
@@ -104,16 +104,16 @@ class LanguageController extends Controller
         $data[$key]=$row;
       }
       $data[$request->key]=$request->value;
-      
+
       \File::put(base_path('resources/lang/'.$request->id.'.json'),json_encode($data,JSON_PRETTY_PRINT));
-      return response()->json('Key Added');  
+      return response()->json('Key Added');
     }
 
     public function show($id)
     {
-        if (!Auth()->user()->can('language_edit')) {
-            return abort(401);
-        }
+//        if (!Auth()->user()->can('language_edit')) {
+//            return abort(401);
+//        }
 
         $file=base_path('resources/lang/'.$id.'.json');
         $posts=file_get_contents($file);
@@ -141,11 +141,11 @@ class LanguageController extends Controller
 
     public function setActiveLanuguage(Request $request)
     {
-        
+
         $posts=Option::where('key','active_languages')->first();
         $actives=json_decode($posts->value ?? '');
         $active_languages=[];
-        
+
         foreach ($request->ids as $key => $value) {
 
             foreach ($value as $k => $row) {
@@ -182,7 +182,7 @@ class LanguageController extends Controller
             if ($id != $key) {
                $data[$key]=$row;
             }
-            
+
         }
 
         $active_languages=[];

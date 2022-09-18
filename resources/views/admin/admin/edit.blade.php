@@ -4,13 +4,13 @@
 @endpush
 @section('content')
 <div class="row">
-	<div class="col-lg-9">      
+	<div class="col-lg-9">
 		<div class="card">
 			<div class="card-body">
 				<h4>{{ __('Edit Admin') }}</h4>
-				<form method="post" action="{{ route('admin.users.update',$user->id) }}" class="basicform">
+				<form method="post" action="{{ route('admin.admins.update',$admin->id) }}" class="basicform">
                     @csrf
-                    @method('PUT')
+{{--                    @method('PUT')--}}
 					<div class="pt-20">
 						@php
 						$arr['title']= 'Name';
@@ -19,18 +19,18 @@
 						$arr['placeholder']= 'Enter Name';
 						$arr['name']= 'name';
                         $arr['is_required'] = true;
-                        $arr['value']=$user->name;
+                        $arr['value']=$admin->name;
 						echo  input($arr);
-                      
+
 						$arr['title']= 'Email';
 						$arr['id']= 'email';
 						$arr['type']= 'email';
 						$arr['placeholder']= 'Enter Email';
 						$arr['name']= 'email';
                         $arr['is_required'] = true;
-                        $arr['value']=$user->email;
+                        $arr['value']=$admin->email;
                         echo  input($arr);
-                        
+
                         $arr['title']= 'Password';
 						$arr['id']= 'password';
 						$arr['type']= 'password';
@@ -38,7 +38,7 @@
 						$arr['name']= 'password';
 						$arr['is_required'] = true;
                         echo  input($arr);
-                        
+
                         $arr['title']= 'Password';
 						$arr['id']= 'password_confirmation';
 						$arr['type']= 'password';
@@ -51,20 +51,20 @@
                             <label for="roles">{{ __('Assign Roles') }}</label>
                                 <select required name="roles[]" id="roles" class="form-control select2" multiple>
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->name }}" {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                        <option value="{{ $role->name }}" {{ $admin->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         <div class="form-group">
                         <label>{{ __('Status') }}</label>
                         <select name="status" class="form-control">
-                            <option value="1" @if($user->status==1) selected @endif>Active</option>
-                            <option value="0"  @if($user->status==0) selected @endif>Deactive</option>
+                            <option value="1" @if($admin->status==1) selected @endif>Active</option>
+                            <option value="0"  @if($admin->status==0) selected @endif>Deactive</option>
 
                         </select>
                         </div>
-                        
-						
+
+
 					</div>
 				</div>
 			</div>
@@ -82,7 +82,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 	</div>
 
 

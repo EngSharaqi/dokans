@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace App\Helpers;
 use Cache;
 use CURLFile;
@@ -7,26 +7,26 @@ use Session;
 use DB;
 class Helper
 {
-     public static $domain;
- 	public static $full_domain;
- 	public static $autoload_static_data;
- 	public static $position;
- 	public static function domain($domain,$full_domain)
+    public static $domain;
+	public static $full_domain;
+	public static $autoload_static_data;
+	public static $position;
+	public static function domain($domain,$full_domain)
 	{
-        
+
 		Helper::$domain=$domain;
 		Helper::$full_domain=$full_domain;
 		$domain_info=domain_info();
-		
+
 		if ($full_domain==env('APP_URL') || $full_domain==env('APP_URL_WITHOUT_WWW')) {
 			return true;
 		}
 		if ($domain==env('APP_PROTOCOLESS_URL') || str_replace('www.','',$domain)==env('APP_PROTOCOLESS_URL')) {
 			return true;
 		}
-	
-	
-				
+
+
+
 		$domain=str_replace('www.','',$domain);
 		Helper::$domain=$domain;
 		if (!Cache::has(Helper::$domain)) {
@@ -36,7 +36,7 @@ class Helper
 				if (empty($data)) {
 					die();
 				}
-				
+
 				$info['domain_id']=$data->id;
 				$info['user_id']=$data->user_id;
 				$info['domain_name']= Helper::$domain;
@@ -57,8 +57,8 @@ class Helper
 		$image_array=explode('/', $file);
 		$image_name=end($image_array);
 		if (file_exists($path)) {
-			
-		
+
+
 		$mime = mime_content_type($file);
 		$info = pathinfo($file);
 		$name = $info['basename'];
@@ -102,27 +102,26 @@ class Helper
 				Helper::$autoload_static_data=$autoload->value;
 				Cache::remember(domain_info('user_id').$autoload->key, 300,function () {
 					return Helper::$autoload_static_data;
-				});	
+				});
 			}
-			
+
         }
 
       }
 	}
 
 	public static function autoload_main_site_data(){
-		
+        $lang=(Session::get('locale')) ? Session::get('locale') : 'en';
 		if(!Cache::has('site_info')){
-			$site_info=\App\Option::where('key','company_info')->first();
+			$site_info=\App\Option::where('key','company_info')->where('lang', $lang)->first();
 			if(!empty($site_info)){
 				Helper::$autoload_static_data=json_decode($site_info->value);
 				Cache::remember('site_info', 300,function () {
 					return Helper::$autoload_static_data;
-					
 				});
-			}	
+			}
 		}
-		
+
 		if(!Cache::has('marketing_tool')){
 			$marketing_tool=\App\Option::where('key','marketing_tool')->first();
 			if(!empty($marketing_tool)){
@@ -131,25 +130,25 @@ class Helper
 					return Helper::$autoload_static_data;
 
 				});
-			}	
+			}
 		}
-		
+
 		if(!Cache::has('active_languages')){
-			$marketing_tool=\App\Option::where('key','active_languages')->first();
+			$marketing_tool=\App\Option::where('key','active_languages')->where('lang', $lang)->first();
 			if(!empty($marketing_tool)){
 				Helper::$autoload_static_data=json_decode($marketing_tool->value);
 				Cache::remember('active_languages', 300,function () {
 					return Helper::$autoload_static_data;
 
 				});
-			}	
+			}
 		}
-		
 
-      
+
+
 	}
 
-	
+
 
 
 	public static function menu_query($menu_position){

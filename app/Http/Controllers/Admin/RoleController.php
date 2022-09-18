@@ -18,10 +18,10 @@ class RoleController extends Controller
      */
     public function index()
     {
-        if (Auth()->user()->can('role.list')) {
+//        if (Auth()->user()->can('role.list')) {
             $roles = Role::where('id','!=',1)->get();
             return view('admin.role.index', compact('roles'));
-        }
+//        }
     }
 
     /**
@@ -31,11 +31,11 @@ class RoleController extends Controller
      */
     public function create()
     {
-        if (Auth()->user()->can('role.create')) {
+//        if (Auth()->user()->can('role.create')) {
             $permisions = Permission::all();
             $permission_groups = User::getPermissionGroup();
             return view('admin.role.create', compact('permisions', 'permission_groups'));
-        }
+//        }
     }
 
     /**
@@ -79,12 +79,12 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        if (Auth()->user()->can('role.edit')) {
+//        if (Auth()->user()->can('role.edit')) {
             $role = Role::findById($id);
             $all_permissions = Permission::all();
             $permission_groups = User::getpermissionGroups();
             return view('admin.role.edit', compact('role', 'all_permissions', 'permission_groups'));
-        }
+//        }
     }
 
     /**
@@ -121,7 +121,7 @@ class RoleController extends Controller
      */
     public function destroy(Request $request)
     {
-        if (Auth()->user()->can('role.delete')) {
+//        if (Auth()->user()->can('role.delete')) {
             if ($request->status == 'delete') {
                 if ($request->ids) {
                     foreach ($request->ids as $id) {
@@ -130,6 +130,6 @@ class RoleController extends Controller
                 }
             }
             return response()->json('Role Removed');
-        }
+//        }
     }
 }

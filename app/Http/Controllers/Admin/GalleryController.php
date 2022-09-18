@@ -17,9 +17,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        if (!Auth()->user()->can('gallery.list')) {
-        return abort(401);
-        }
+//        if (!Auth()->user()->can('gallery.list')) {
+//        return abort(401);
+//        }
         $posts=Category::where('is_admin',1)->where('type','gallery')->with('preview')->latest()->paginate(20);
         return view('admin.gallery.index',compact('posts'));
     }
@@ -32,9 +32,9 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth()->user()->can('gallery.create')) {
-        return abort(401);
-        }
+//        if (!Auth()->user()->can('gallery.create')) {
+//        return abort(401);
+//        }
        $validatedData = $request->validate([
         'name' => 'required|max:255',
         'file' => 'required|image|max:1000',
@@ -53,7 +53,7 @@ class GalleryController extends Controller
        $category->type='gallery';
        $category->save();
 
-       $fileName = time().'.'.$request->file->extension();  
+       $fileName = time().'.'.$request->file->extension();
        $request->file->move('uploads/admin/1/'.date('Y/m/'), $fileName);
 
        $meta=new Categorymeta;
@@ -67,7 +67,7 @@ class GalleryController extends Controller
 
     }
 
-   
+
     /**
      * Remove the specified resource from storage.
      *

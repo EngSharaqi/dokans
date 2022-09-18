@@ -21,28 +21,28 @@
 				</div>
 				<div class="pricing-details">
 					<div class="pricing-item">
-						
+
 						<div class="pricing-item-label">{{ __('Products Limit') }} {{ $data->product_limit }}</div>
 					</div>
 					<div class="pricing-item">
-						
+
 						<div class="pricing-item-label">{{ __('Storage Limit') }} {{ number_format($data->storage) }}MB</div>
 					</div>
 					@if(env('MULTILEVEL_CUSTOMER_REGISTER') == true)
-					<div class="pricing-item">						
+					<div class="pricing-item">
 						<div class="pricing-item-label">{{ __('Customer Limit') }} {{ number_format($data->customer_limit) }}</div>
 					</div>
 					@endif
-					<div class="pricing-item">						
+					<div class="pricing-item">
 						<div class="pricing-item-label">{{ __('Shipping Zone Limit') }} {{ $data->location_limit ?? '' }}</div>
 					</div>
-					<div class="pricing-item">						
+					<div class="pricing-item">
 						<div class="pricing-item-label">{{ __('Category Limit') }} {{ $data->category_limit ?? '' }}</div>
 					</div>
-					<div class="pricing-item">						
+					<div class="pricing-item">
 						<div class="pricing-item-label">{{ __('Brand Limit') }} {{ $data->brand_limit ?? '' }}</div>
 					</div>
-					<div class="pricing-item">						
+					<div class="pricing-item">
 						<div class="pricing-item-label">{{ __('Product Variation Limit') }} {{ $data->variation_limit ?? '' }}</div>
 					</div>
 
@@ -54,36 +54,36 @@
 						<div class="pricing-item-icon  bg-danger text-white"><i class="fas fa-times"></i></div>
 						@endif
 					</div>
-					
+
 					<div class="pricing-item">
 						<div class="pricing-item-label text-left">{{ __('Google Analytics') }} &nbsp&nbsp</div>
-						
+
 						<div class="pricing-item-icon {{ $data->google_analytics == 'false' ? 'bg-danger text-white' : ''  }} "><i class="{{ $data->google_analytics == 'false' ? 'fas fa-times' : 'fas fa-check'  }}"></i></div>
-						
+
 					</div>
-					
+
 
 					<div class="pricing-item">
 						<div class="pricing-item-label text-left">{{ __('Facebook Pixel') }} &nbsp&nbsp</div>
-						
+
 						<div class="pricing-item-icon {{ $data->facebook_pixel == 'false' ? 'bg-danger text-white' : ''  }} "><i class="{{ $data->facebook_pixel == 'false' ? 'fas fa-times' : 'fas fa-check'  }}"></i></div>
-						
+
 					</div>
-					
+
 					<div class="pricing-item">
 						<div class="pricing-item-label text-left">{{ __('Google Tag Manager') }} &nbsp&nbsp</div>
-						
+
 						<div class="pricing-item-icon {{ $data->gtm == 'false' ? 'bg-danger text-white' : ''  }} "><i class="{{ $data->gtm == 'false' ? 'fas fa-times' : 'fas fa-check'  }}"></i></div>
-						
+
 					</div>
-					
+
 					<div class="pricing-item">
 						<div class="pricing-item-label text-left">{{ __('Whatsapp Plugin') }} &nbsp&nbsp</div>
-						
+
 						<div class="pricing-item-icon {{ $data->whatsapp == 'false' ? 'bg-danger text-white' : ''  }} "><i class="{{ $data->whatsapp == 'false' ? 'fas fa-times' : 'fas fa-check'  }}"></i></div>
-						
+
 					</div>
-					
+
 					<div class="pricing-item">
 						<div class="pricing-item-label">{{ __('Inventory Management') }} &nbsp&nbsp</div>
 
@@ -118,9 +118,9 @@
 						<div class="pricing-item-label">{{ __('Customer Panel Access') }} &nbsp&nbsp</div>
 						<div class="pricing-item-icon {{ $data->customer_panel == 'false' ? 'bg-danger text-white' : ''  }} "><i class="{{ $data->customer_panel == 'false' ? 'fas fa-times' : 'fas fa-check'  }}"></i></div>
 					</div>
-					
-					
-					
+
+
+
 					<div class="pricing-item">
 						<div class="pricing-item-label">{{ __('Multi Language') }} &nbsp&nbsp</div>
 						<div class="pricing-item-icon"><i class="fas fa-check"></i></div>
@@ -129,7 +129,7 @@
 						<div class="pricing-item-label">{{ __('Image Optimization') }} &nbsp&nbsp</div>
 						<div class="pricing-item-icon"><i class="fas fa-check"></i></div>
 					</div>
-					
+
 				</div>
 			</div>
 			<div class="pricing-cta">
@@ -137,7 +137,7 @@
 			</div>
 		</div>
 	</div>
-	@endforeach	
+	@endforeach
 </div>
 
 
@@ -155,7 +155,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('admin.order.store') }}" id="productform">
+				<form method="post" action="{{ route('admin.orders.store') }}" id="productform">
 					@csrf
 					<div class="form-group">
 						<label>{{ __('Customer Email') }}</label>
@@ -181,7 +181,7 @@
 						<label>{{ __('Transaction Id') }}</label>
 						<input type="text" name="transition_id" required="" class="form-control">
 					</div>
-					
+
 					<div class="form-group">
 						<label>{{ __('Send Email To Customer ?') }}</label>
 						<select class="form-control" name="notification_status" id="notification_status">
@@ -189,7 +189,7 @@
 							<option value="no" selected="">{{ __('No') }}</option>
 						</select>
 					</div>
-					
+
 					<div class="form-group none" id="email_content">
 						<label>{{ __('Email Comment') }}</label>
 						<textarea class="form-control" name="content"></textarea>
@@ -209,4 +209,4 @@
 <script type="text/javascript" src="{{ asset('assets/js/ckeditor/ckeditor.js') }}"></script>
 <script src="{{ asset('assets/js/form.js?v=1.0') }}"></script>
 <script src="{{ asset('assets/js/admin/order_create.js') }}"></script>
-@endpush	
+@endpush

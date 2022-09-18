@@ -12,11 +12,11 @@
       </div>
       <div class="card-body">
 
-        <form class="basicform" action="{{ route('admin.customer.updateplaninfo',$domain->id) }}" method="post">
+        <form class="basicform" action="{{ route('admin.customers.updateplaninfo',$domain->id) }}" method="post">
           @csrf
           @method('PUT')
 
-          
+
 
           <div class="form-group row mb-4">
             <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" >{{ __('Product Limit') }}</label>
@@ -138,7 +138,7 @@
           </select>
         </div>
       </div>
-      
+
       <div class="form-group row mb-4">
         <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" >{{ __('Facebook Pixel') }}</label>
         <div class="col-sm-12 col-md-7">

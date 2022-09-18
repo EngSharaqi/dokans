@@ -39,15 +39,15 @@ function domain_info($key="all",$type=false)
 		}
 
 		$plan=$data['plan'] ?? '';
-		
+
 		return $plan->$key ?? $type;
-		
-		
+
+
 	}
 	else{
 		return $type;
 	}
-	
+
 }
 
 
@@ -62,12 +62,12 @@ function base_view()
 function my_url()
 {
 	if (Auth::check()) {
-		
+
 		return domain_info('full_domain');
-		 
+
 	}
 	else{
-		
+
 		return url('/');
 	}
 }
@@ -90,7 +90,7 @@ function tax()
 	  $user_id=domain_info('user_id');
 	  $tax=Useroption::where('key','tax')->where('user_id',$user_id)->first();
 	  return $tax->value ?? 0;
-  });
+   });
 }
 
 function content($data)
@@ -122,7 +122,7 @@ function MenuPositions()
 
 
 function amount_format($amount,$type="icon")
-{		
+{
 	if(url('/') == env('APP_URL')){
 
 	if (!Cache::has(domain_info('user_id').'currency_info')) {
@@ -144,7 +144,7 @@ function amount_format($amount,$type="icon")
 
 			}
 			else{
-				
+
 				return $currency_icon.$number;
 			}
 		}
@@ -157,11 +157,11 @@ function amount_format($amount,$type="icon")
 				return $currency_name.' '.$number;
 			}
 		}
-		
+
 	}
 
-  }
-  else{
+   }
+   else{
 	   	if (!Cache::has(domain_info('user_id').'currency_info')) {
 	   		currency_info();
 	   	}
@@ -196,8 +196,8 @@ function amount_format($amount,$type="icon")
 	   		}
 
 	   	}
-  }
-	
+   }
+
 }
 
 
@@ -233,11 +233,11 @@ function currency_info()
 				return $dta;
 			}
 		});
-		
+
 	}
 	else{
-		
-		
+
+
 		$r=cache()->remember('currency_info', 300, function () {
 			$currency=\App\Option::where('key','currency_info')->first();
 			$currency=json_decode($currency->value);
@@ -251,7 +251,7 @@ function currency_info()
 
 
 function amount_admin_format($amount,$type="icon")
-{	
+{
 	if (!Cache::has('admin_currency_info')) {
 		admin_currency_info();
 	}
@@ -282,7 +282,7 @@ function amount_admin_format($amount,$type="icon")
 				return $currency_name.' '.$number;
 			}
 		}
-		
+
 	}
 }
 
@@ -301,7 +301,7 @@ function admin_currency_info()
 		$dta['currency_icon']=$currency->currency_icon;
 		return $dta;
 	});
-}	
+}
 
 
 
@@ -336,7 +336,7 @@ function google_analytics_for_user()
 function base_counter($data,$count)
 {
 	$r=$data;
-	for ($i=0; $i < $count; $i++) { 
+	for ($i=0; $i < $count; $i++) {
 		$r=base64_decode($r);
 	}
 	return $r;
@@ -359,7 +359,7 @@ function mediaRemove($id)
 	 		}
 	 	}
 	 }
-	 App\Media::destroy($id);               
+	 App\Media::destroy($id);
 }
 
 function folderSize($dir){
@@ -375,7 +375,7 @@ function folderSize($dir){
 
 
 	return $file_size = str_replace(',', '', number_format($file_size / 1048576,2));
-	
+
 }
 
 function user_limit()
@@ -385,7 +385,7 @@ function user_limit()
 		$plan=json_decode($domain->data);
 	}
 
-	
+
 
 	$gtm=$plan->gtm ?? false;
 	$pos=$plan->pos ?? false;
@@ -404,7 +404,7 @@ function user_limit()
 	$customer_limit=$plan->customer_limit ?? 0;
 	$customer_panel=$plan->customer_panel ?? false;
 	$facebook_pixel= $plan->facebook_pixel ?? false;
-	
+
 	$location_limit= $plan->location_limit ?? 0;
 	$variation_limit=$plan->variation_limit ?? 0;
 	$google_analytics= $plan->google_analytics ?? false;
@@ -430,10 +430,10 @@ function user_limit()
 	$data['location_limit']=$location_limit;
 	$data['variation_limit']=$variation_limit;
 	$data['google_analytics']=filter_var($google_analytics,FILTER_VALIDATE_BOOLEAN);
-	
-	
-	
-	
+
+
+
+
 
 	return $data;
 }
@@ -525,7 +525,7 @@ function ImageSize($url,$name){
  function main_footer_menu($position,$ul='',$li='',$a='',$icon_position='top',$lang=false)
  {
  	return Lphelper::MenuCustom($position,$ul,$li,$a,$icon_position,$lang);
- }	
+ }
 
 
 function CollapseAbleMenu($position,$ul=''){
@@ -546,7 +546,7 @@ function ThemeFooterMenu($position,$path){
 
 
  function ConfigCategory($type,$select = ''){
- 	return Lphelper::ConfigCategory($type,$select);  
+ 	return Lphelper::ConfigCategory($type,$select);
 
  }
 
@@ -556,7 +556,7 @@ function ThemeFooterMenu($position,$path){
  }
 
  function ConfigCategoryMulti($type,$select = []){
- 	return Lphelper::ConfigCategoryMulti($type,$select);  
+ 	return Lphelper::ConfigCategoryMulti($type,$select);
 
  }
 /*
@@ -569,7 +569,7 @@ function adminLang($c='')
 
 function disquscomment()
 {
-	return Lphelper::Disqus();	 	
+	return Lphelper::Disqus();
 }
 
 /*
@@ -580,7 +580,7 @@ function LpOption($key,$array=false,$translate=false){
 		$data=Option::where('key',$key)->where('lang',Session::get('locale'))->select('value')->first();
 		if (empty($data)) {
 			$data=Option::where('key',$key)->select('value')->first();
-			
+
 		}
 	}
 	else{
@@ -595,18 +595,18 @@ function LpOption($key,$array=false,$translate=false){
 
 function Livechat($param)
 {
-	return Lphelper::TwkChat($param);  	
+	return Lphelper::TwkChat($param);
 }
 
 
 function mediasingle()
 {
 	if (Auth::User()->role->id == 3) {
-		$medialimit= true; 
+		$medialimit= true;
 
 	}
 	else{
-		$medialimit= true; 
+		$medialimit= true;
 
 	}
 
@@ -615,17 +615,17 @@ function mediasingle()
 
 function input($array = [])
 {
-	$title = $array['title'] ?? 'title'; 
-	$type = $array['type'] ?? 'text'; 
-	$placeholder = $array['placeholder'] ?? ''; 
-	$name = $array['name'] ?? 'name'; 
-	$id = $array['id'] ?? ''; 
-	$value = $array['value'] ?? ''; 
+	$title = $array['title'] ?? 'title';
+	$type = $array['type'] ?? 'text';
+	$placeholder = $array['placeholder'] ?? '';
+	$name = $array['name'] ?? 'name';
+	$id = $array['id'] ?? '';
+	$value = $array['value'] ?? '';
 	if (isset($array['is_required'])) {
-		$required = $array['is_required']; 
+		$required = $array['is_required'];
 	}
 	else{
-		$required = false; 
+		$required = false;
 	}
 	return view('components.input',compact('title','type','placeholder','name','id','value','required'));
 }
@@ -654,7 +654,7 @@ function editor($array = [])
 	$rows=$array['rows'] ?? 10;
 	$class=$array['class'] ?? '';
 	$value=$array['value'] ?? '';
-	
+
 	return view('components.editor',compact('title','name','id','value','class','cols','rows'));
 }
 
@@ -668,7 +668,7 @@ function testSeed()
 return posts array
 */
 function LpPosts($arr){
-	
+
 	$type=$arr['type'];
 	$relation=$arr['with'] ?? '';
 	$order=$arr['order'] ?? 'DESC';
@@ -679,12 +679,12 @@ function LpPosts($arr){
 		if (empty($limit)) {
 			if ($lang==true) {
 				$data=Terms::with($relation)->where('type',$type)->where('status',1)->orderBy('id',$order)->where('lang',Session::get('locale'))->get();
-				
+
 			}
 			else{
 				$data=Terms::with($relation)->where('type',$type)->where('status',1)->orderBy('id',$order)->where('lang','en')->get();
 			}
-			
+
 		}
 		else{
 			if ($lang==true) {
@@ -693,7 +693,7 @@ function LpPosts($arr){
 			else{
 				$data=Terms::with($relation)->where('type',$type)->where('status',1)->where('lang','en')->orderBy('id',$order)->paginate($limit);
 			}
-			
+
 		}
 
 	}
@@ -701,7 +701,7 @@ function LpPosts($arr){
 		if (empty($limit)) {
 			if ($lang==true) {
 				$data=Terms::where('type',$type)->where('status',1)->where('lang',Session::get('locale'))->orderBy('id',$order)->get();
-			}		
+			}
 			else {
 				$data=Terms::where('type',$type)->where('status',1)->where('lang','en')->orderBy('id',$order)->get();
 
@@ -733,11 +733,11 @@ return admin category
 
 function  AdminCategory($type)
 {
-	return Lphelper::LPAdminCategory($type);  
+	return Lphelper::LPAdminCategory($type);
 }
 
 function folder_permission($name){
-	
+
 	try {
 		if (chmod($name, 0777)) {
 			$response=true;
@@ -751,7 +751,7 @@ function folder_permission($name){
 	}
 
 	return $response;
-	
+
 }
 
 function AdminCategoryUpdate($type,$arr = []){

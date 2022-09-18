@@ -22,12 +22,13 @@ class CreateCategoriesTable extends Migration
             $table->integer('featured')->default(0);
             $table->integer('menu_status')->default(0);
             $table->integer('is_admin')->default(0);
+            $table->text('lang')->deafult("en");
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
             ->references('id')->on('users')
-            ->onDelete('cascade'); 
-            
+            ->onDelete('cascade');
+
         });
     }
 

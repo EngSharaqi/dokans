@@ -8,11 +8,11 @@
     <div class="card">
       <div class="card-header">
         <h4>{{ __('Create Customer') }}</h4>
-                
+
       </div>
       <div class="card-body">
 
-        <form class="basicform_with_reload" action="{{ route('admin.customer.store') }}" method="post">
+        <form class="basicform_with_reload" action="{{ route('admin.customers.store') }}" method="post">
           @csrf
 
           <div class="form-group row mb-4">
@@ -36,7 +36,7 @@
           </div>
         </div>
 
-        
+
 
          <div class="form-group row mb-4">
           <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" >{{ __('Transaction Method') }}</label>
@@ -78,15 +78,15 @@
         <div class="form-group row mb-4">
           <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" >{{ __('Full Domain With Protocol') }}  <small class="text-danger">https://example.com</small></label>
 
-         
+
           <div class="col-sm-12 col-md-7">
             <input type="text" class="form-control" required="" name="full_domain">
           </div>
         </div>
 
-        
 
-    
+
+
         <div class="form-group row mb-4">
           <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3"></label>
           <div class="col-sm-12 col-md-7">
@@ -101,11 +101,11 @@
         $paths=explode($ext, base_path());
         $count=count($paths);
         @endphp
-        <span>Your Root Path: <b><span class="text-danger">@foreach($paths as $key => $row) 
+        <span>Your Root Path: <b><span class="text-danger">@foreach($paths as $key => $row)
           @php
           $key=$key+1;
-          @endphp 
-         @if($key != $count){{ $row }}\@endif 
+          @endphp
+         @if($key != $count){{ $row }}\@endif
          @endforeach</span></span>
           <br>
         <span>{{ __('Note') }}: <b><span class="text-danger">{{ __('Before Add New Domain Please Create Domain Manually On Your Server The Domain Root Path Is Same With Your Project Directory') }}</span></b></span>

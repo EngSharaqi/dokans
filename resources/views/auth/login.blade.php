@@ -7,18 +7,18 @@
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="shortcut icon" type="image/x-icon" href="{{ asset('uploads/favicon.ico') }}">
   <!-- General CSS Files -->
-  
+
   <link rel="stylesheet" href="{{ asset('assets/frontend/css/bootstrap.min.css') }}">
 
-  
+
   <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}">
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
-  
 
-  
+
+
 </head>
 
 <body>
@@ -36,7 +36,7 @@
 
               <div class="card-body">
 
-               <form method="POST" class="loginform" class="needs-validation" action="{{ route('login') }}">
+               <form method="POST" class="loginform" class="needs-validation" action="{{ route('login.form') }}">
                 @csrf
                 <div class="form-group">
                   <label for="email">{{ __('E-Mail Address') }}</label>
@@ -80,12 +80,12 @@
               </form>
 
 
-   
+
 
           <div class="simple-footer">
             {{ __('Copyright') }} &copy; {{ env('APP_NAME') }} {{ date('Y') }}
           </div>
-       
+
       </div>
     </div>
   </section>

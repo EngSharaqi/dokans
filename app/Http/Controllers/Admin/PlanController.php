@@ -20,9 +20,9 @@ class PlanController extends Controller
     public function index()
     {
 
-       if (!Auth()->user()->can('plan.list')) {
-           abort(401);
-       }
+//       if (!Auth()->user()->can('plan.list')) {
+//           abort(401);
+//       }
        $posts=Plan::withCount('active_users')->latest()->get();
        return view('admin.plan.index',compact('posts'));
    }
@@ -34,9 +34,9 @@ class PlanController extends Controller
      */
     public function create()
     {
-      if (!Auth()->user()->can('plan.create')) {
-           abort(401);
-       }
+//      if (!Auth()->user()->can('plan.create')) {
+//           abort(401);
+//       }
         return view('admin.plan.create');
     }
 
@@ -48,7 +48,6 @@ class PlanController extends Controller
      */
     public function store(Request $request)
     {
-        
         $plan_data['product_limit']=$request->product_limit;
         $plan_data['customer_limit']=$request->customer_limit;
         $plan_data['storage']=$request->storage;
@@ -61,7 +60,7 @@ class PlanController extends Controller
         $plan_data['live_support']=$request->live_support;
         $plan_data['qr_code']=$request->qr_code;
         $plan_data['facebook_pixel']=$request->facebook_pixel;
-      
+
         $plan_data['custom_css']=$request->custom_css;
         $plan_data['custom_js']=$request->custom_js;
         $plan_data['gtm']=$request->gtm;
@@ -70,7 +69,7 @@ class PlanController extends Controller
         $plan_data['brand_limit']=$request->brand_limit;
         $plan_data['variation_limit']=$request->variation_limit;
         $plan_data['google_analytics']=$request->google_analytics;
-        
+
 
         $plan=new Plan;
         $plan->name=$request->name;
@@ -78,9 +77,10 @@ class PlanController extends Controller
         $plan->price=$request->price;
         $plan->days=$request->days;
         $plan->data=json_encode($plan_data);
-        $plan->status=$request->status; 
+        $plan->status=$request->status;
         $plan->featured=$request->featured;
         $plan->is_default=0;
+        $plan->lang=$request->lang;
         $plan->save();
 
         return response()->json(['Plan Created']);
@@ -94,11 +94,11 @@ class PlanController extends Controller
      */
     public function show($id)
     {
-        if (!Auth()->user()->can('plan.show')) {
-           abort(401);
-        }
+//        if (!Auth()->user()->can('plan.show')) {
+//           abort(401);
+//        }
         $this->id=$id;
-       
+
         $posts=User::where('role_id',3)->whereHas('user_plan',function($q){
             return $q->where('plan_id',$this->id);
         })->with('user_domain','user_plan')->latest()->paginate(40);
@@ -113,9 +113,9 @@ class PlanController extends Controller
      */
     public function edit($id)
     {
-        if (!Auth()->user()->can('plan.edit')) {
-           abort(401);
-        }
+//        if (!Auth()->user()->can('plan.edit')) {
+//           abort(401);
+//        }
         $info=Plan::find($id);
         $plan_info=json_decode($info->data);
         return view('admin.plan.edit',compact('info','plan_info'));
@@ -142,7 +142,7 @@ class PlanController extends Controller
         $plan_data['live_support']=$request->live_support;
         $plan_data['qr_code']=$request->qr_code;
         $plan_data['facebook_pixel']=$request->facebook_pixel;
-      
+
         $plan_data['custom_css']=$request->custom_css;
         $plan_data['custom_js']=$request->custom_js;
         $plan_data['gtm']=$request->gtm;
@@ -159,9 +159,10 @@ class PlanController extends Controller
         $plan->price=$request->price;
         $plan->days=$request->days;
         $plan->data=json_encode($plan_data);
-        $plan->status=$request->status; 
+        $plan->status=$request->status;
         $plan->featured=$request->featured;
         $plan->is_default=0;
+        $plan->lang=$request->lang;
         $plan->save();
 
         return response()->json(['Plan Updated']);
@@ -181,13 +182,13 @@ class PlanController extends Controller
                 Plan::destroy($row);
             }
         }
-        
+
        }
         return response()->json(['Category Deleted']);
     }
 
-    public function __construct()
-    {
-        abort_if(!Route::has('admin.plan.index'),404);
-    }
+//    public function __construct()
+//    {
+//        abort_if(!Route::has('admin.plan.index'),404);
+//    }
 }

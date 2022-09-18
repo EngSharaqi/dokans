@@ -13,9 +13,9 @@ class SiteController extends Controller
 {
     public function site_settings()
     {
-		if (!Auth()->user()->can('site.settings')) {
-            return abort(401);
-        }
+//		if (!Auth()->user()->can('site.settings')) {
+//            return abort(401);
+//        }
 
     	$site_info=\App\Option::where('key','company_info')->first();
         $info=json_decode($site_info->value);
@@ -25,10 +25,10 @@ class SiteController extends Controller
         $currency_info=Option::where('key','currency_info')->first();
     	$auto_order=Option::where('key','auto_order')->first();
         $tax=Option::where('key','tax')->first();
-        
-         
+
+
         $currency_info=json_decode($currency_info->value ?? '');
-       
+
     	return view('admin.settings.site_settings',compact('info','currency_name','currency_icon','order_prefix','currency_info','auto_order','tax'));
     }
 
@@ -70,7 +70,7 @@ class SiteController extends Controller
     	$currency_name->value=json_encode($currency_data);
     	$currency_name->save();
 
-    	
+
 
     	$order_prefix=Option::where('key','order_prefix')->first();
     	if (empty($order_prefix)) {
@@ -124,9 +124,9 @@ class SiteController extends Controller
 
     public function system_environment_view()
     {
-		if (!Auth()->user()->can('site.settings')) {
-            return abort(401);
-        }
+//		if (!Auth()->user()->can('site.settings')) {
+//            return abort(401);
+//        }
     	$countries= base_path('resources/lang/langlist.json');
         $countries= json_decode(file_get_contents($countries),true);
     	return view('admin.settings.env',compact('countries'));
@@ -134,7 +134,7 @@ class SiteController extends Controller
 
     public function env_update(Request $request)
     {
-        
+
 
     	$APP_URL_WITHOUT_WWW=str_replace('www.','', url('/'));
     	 $APP_NAME = Str::slug($request->APP_NAME);
@@ -203,7 +203,7 @@ File::put(base_path('.env'),$txt);
 
 
 
-     
+
        return response()->json(['System Updated']);
 
 

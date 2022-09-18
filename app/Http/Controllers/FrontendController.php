@@ -40,56 +40,57 @@ class FrontendController extends Controller
 //        $url=str_replace('www.','',$url);
 //        if($url==env('APP_PROTOCOLESS_URL') || $url == 'localhost'){
 
+           $lang=(Session::get('locale')) ? Session::get('locale') : 'en';
+            $seo = Option::where('key', 'seo')->first();
+            $seo = json_decode($seo->value);
 
-        $seo=Option::where('key','seo')->first();
-        $seo=json_decode($seo->value);
+            JsonLdMulti::setTitle($seo->title ?? env('APP_NAME'));
+            JsonLdMulti::setDescription($seo->description ?? null);
+            JsonLdMulti::addImage(asset('uploads/logo.png'));
 
-       JsonLdMulti::setTitle($seo->title ?? env('APP_NAME'));
-       JsonLdMulti::setDescription($seo->description ?? null);
-       JsonLdMulti::addImage(asset('uploads/logo.png'));
+            SEOMeta::setTitle($seo->title ?? env('APP_NAME'));
+            SEOMeta::setDescription($seo->description ?? null);
+            SEOMeta::addKeyword($seo->tags ?? null);
 
-       SEOMeta::setTitle($seo->title ?? env('APP_NAME'));
-       SEOMeta::setDescription($seo->description ?? null);
-       SEOMeta::addKeyword($seo->tags ?? null);
-
-       SEOTools::setTitle($seo->title ?? env('APP_NAME'));
-       SEOTools::setDescription($seo->description ?? null);
-       SEOTools::setCanonical($seo->canonical ?? url('/'));
-       SEOTools::opengraph()->addProperty('keywords', $seo->tags ?? null);
-       SEOTools::opengraph()->addProperty('image', asset('uploads/logo.png'));
-       SEOTools::twitter()->setTitle($seo->title ?? env('APP_NAME'));
-       SEOTools::twitter()->setSite($seo->twitterTitle ?? null);
-       SEOTools::jsonLd()->addImage(asset('uploads/logo.png'));
+            SEOTools::setTitle($seo->title ?? env('APP_NAME'));
+            SEOTools::setDescription($seo->description ?? null);
+            SEOTools::setCanonical($seo->canonical ?? url('/'));
+            SEOTools::opengraph()->addProperty('keywords', $seo->tags ?? null);
+            SEOTools::opengraph()->addProperty('image', asset('uploads/logo.png'));
+            SEOTools::twitter()->setTitle($seo->title ?? env('APP_NAME'));
+            SEOTools::twitter()->setSite($seo->twitterTitle ?? null);
+            SEOTools::jsonLd()->addImage(asset('uploads/logo.png'));
 
 
-      $latest_gallery=Category::where('type','gallery')->with('preview')->where('is_admin',1)->latest()->take(15)->get();
-      $features=Category::where('type','features')->with('preview','excerpt')->where('is_admin',1)->latest()->take(6)->get();
+            $latest_gallery = Category::where('type', 'gallery')->with('preview')->where('is_admin', 1)->latest()->take(15)->get();
+            $features = Category::where('type', 'features')->with('preview', 'excerpt')->where('is_admin', 1)->where('lang', $lang)->latest()->take(6)->get();
 
-      $testimonials=Category::where('type','testimonial')->with('excerpt')->where('is_admin',1)->latest()->get();
+            $testimonials = Category::where('type', 'testimonial')->with('excerpt')->where('lang', $lang)->where('is_admin', 1)->where('lang', $lang)->latest()->get();
 
-      $brands=Category::where('type','brand')->with('preview')->where('is_admin',1)->latest()->get();
+            $brands = Category::where('type', 'brand')->with('preview')->where('is_admin', 1)->latest()->get();
 
-      $plans=Plan::where('status',1)->where('is_default',0)->latest()->take(3)->get();
-      $header=Option::where('key','header')->first();
-      $header=json_decode($header->value ?? '');
+            $plans = Plan::where('status', 1)->where('is_default', 0)->where('lang', $lang)->latest()->take(3)->get();
+            $header = Option::where('key', 'header')->where('lang', $lang)->first();
+            $header = json_decode($header->value ?? '');
 
-      $about_1=Option::where('key','about_1')->first();
-      $about_1=json_decode($about_1->value ?? '');
+            $about_1 = Option::where('key', 'about_1')->where('lang', $lang)->first();
+            $about_1 = json_decode($about_1->value ?? '');
 
-        $about_2=Option::where('key','about_2')->first();
-        $about_2=json_decode($about_2->value ?? '');
+            $about_2 = Option::where('key', 'about_2')->where('lang', $lang)->first();
+            $about_2 = json_decode($about_2->value ?? '');
 
-        $about_3=Option::where('key','about_3')->first();
-        $about_3=json_decode($about_3->value ?? '');
+            $about_3 = Option::where('key', 'about_3')->where('lang', $lang)->first();
+            $about_3 = json_decode($about_3->value ?? '');
 
-        $ecom_features=Option::where('key','ecom_features')->first();
-        $ecom_features=json_decode($ecom_features->value ?? '');
+            $ecom_features = Option::where('key', 'ecom_features')->where('lang', $lang)->first();
+            $ecom_features = json_decode($ecom_features->value ?? '');
 
-        $counter_area=Option::where('key','counter_area')->first();
-        $counter_area=json_decode($counter_area->value ?? '');
+            $counter_area = Option::where('key', 'counter_area')->first();
+            $counter_area = json_decode($counter_area->value ?? '');
 
-      return view('welcome',compact('latest_gallery','plans','features','header','about_1','about_3','about_2','testimonials','brands','ecom_features','counter_area'));
-//
+            return view('welcome', compact('latest_gallery', 'plans', 'features', 'header', 'about_1', 'about_3', 'about_2', 'testimonials', 'brands', 'ecom_features', 'counter_area'));
+       // }
+      //
 //       }
 //       return redirect('/check');
     }
@@ -133,6 +134,7 @@ class FrontendController extends Controller
     }
 
     public function service(){
+        $lang=(Session::get('locale')) ? Session::get('locale') : 'en';
         $seo=Option::where('key','seo')->first();
         $seo=json_decode($seo->value);
         JsonLdMulti::setTitle('Our Service');
@@ -151,11 +153,12 @@ class FrontendController extends Controller
         SEOTools::twitter()->setTitle('Our Service');
 
         SEOTools::jsonLd()->addImage(asset('uploads/logo.png'));
-        $features=Category::where('type','features')->with('preview','excerpt')->where('is_admin',1)->latest()->get();
+        $features=Category::where('type','features')->with('preview','excerpt')->where('is_admin',1)->where('lang', $lang)->latest()->get();
         return view('service',compact('features'));
     }
 
     public function priceing(){
+        $lang=(Session::get('locale')) ? Session::get('locale') : 'en';
         $seo=Option::where('key','seo')->first();
         $seo=json_decode($seo->value);
         JsonLdMulti::setTitle('Priceing');
@@ -175,7 +178,7 @@ class FrontendController extends Controller
 
         SEOTools::jsonLd()->addImage(asset('uploads/logo.png'));
 
-        $plans=Plan::where('status',1)->where('is_default',0)->get();
+        $plans=Plan::where('status',1)->where('is_default',0)->where('lang', $lang)->get();
 
         return view('priceing',compact('plans'));
     }

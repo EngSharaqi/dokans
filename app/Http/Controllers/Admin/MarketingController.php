@@ -16,16 +16,16 @@ class MarketingController extends Controller
      */
     public function index()
     {
-        
-        if (!Auth()->user()->can('marketing.tools')) {
-            return abort(401);
-        }
+
+//        if (!Auth()->user()->can('marketing.tools')) {
+//            return abort(401);
+//        }
         $info=Option::where('key','marketing_tool')->first();
         $info=json_decode($info->value ?? '');
         return view('admin.marketing.index',compact('info'));
     }
 
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -36,7 +36,7 @@ class MarketingController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-           
+
             'file' => 'mimes:json|max:50',
 
         ]);
@@ -48,7 +48,7 @@ class MarketingController extends Controller
 
         $info=Option::where('key','marketing_tool')->first();
         if (empty($info)) {
-            
+
             $data['ga_measurement_id']=$request->ga_measurement_id ?? '';
             $data['analytics_view_id']=$request->analytics_view_id ?? '';
             $data['google_status']=$request->google_status ?? '';
@@ -74,5 +74,5 @@ class MarketingController extends Controller
         return response()->json(['Tools Updated']);
     }
 
-    
+
 }

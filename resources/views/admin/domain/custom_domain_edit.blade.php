@@ -11,11 +11,11 @@
         <div class="card-header-action">
           <small class="text-right">{{ __('Note') }}: <span class="text-danger">{{ __('It Will Replace Current User Domain') }}</span></small>
         </div>
-        
+
       </div>
       <div class="card-body">
 
-        <form class="basicform" action="{{ route('admin.customdomain.update',$info->id) }}" method="post">
+        <form class="basicform" action="{{ route('admin.customdomains.update',$info->id) }}" method="post">
           @csrf
           @method('PUT')
         <div class="form-group row mb-4">
@@ -28,17 +28,17 @@
         <div class="form-group row mb-4">
           <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" >{{ __('Reflect With Main Domain') }}</label>
 
-         
+
           <div class="col-sm-12 col-md-7">
             <select class="form-control selectric" name="reflect">
               <option value="1" >{{ __('Yes') }}</option>
               <option value="0">{{ __('No') }}</option>
-             
+
             </select>
           </div>
         </div>
-     
-       
+
+
         <div class="form-group row mb-4">
           <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">{{ __('Status') }}</label>
           <div class="col-sm-12 col-md-7">
@@ -63,11 +63,11 @@
         $paths=explode($ext, base_path());
         $count=count($paths);
         @endphp
-        <span>Your Root Path: <b><span class="text-danger">@foreach($paths as $key => $row) 
+        <span>Your Root Path: <b><span class="text-danger">@foreach($paths as $key => $row)
           @php
           $key=$key+1;
-          @endphp 
-         @if($key != $count){{ $row }}\@endif 
+          @endphp
+         @if($key != $count){{ $row }}\@endif
          @endforeach</span></span>
           <br>
         <span>{{ __('Note') }}: <b><span class="text-danger">{{ __('Before Add Or Edit Domain Please Create Or Edit Domain Manually On Your Server The Domain Root Path Is Same With Your Project Directory') }}</span></b></span>

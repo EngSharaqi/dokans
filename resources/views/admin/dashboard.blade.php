@@ -172,7 +172,7 @@
         </div>
       </div>
       <div class="card-body">
-        <canvas id="myChart" height="150"></canvas> 
+        <canvas id="myChart" height="150"></canvas>
       </div>
     </div>
   </div>
@@ -209,7 +209,7 @@
   <div class="col-md-12 col-12 col-sm-12">
     <div class="card">
       <div class="card-header">
-        <h4><a href="{{ route('admin.order.index','status=2') }}">{{ __('Recent Orders') }}</a></h4>
+        <h4><a href="{{ route('admin.orders.index','status=2') }}">{{ __('Recent Orders') }}</a></h4>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -230,7 +230,7 @@
               @foreach($orders ?? [] as $key => $row)
               <tr>
 
-                <td class="text-left"><a href="{{ route('admin.order.invoice',$row->id) }}">{{ $row->order_no }}</a></td>
+                <td class="text-left"><a href="{{ route('admin.orders.invoice',$row->id) }}">{{ $row->order_no }}</a></td>
                 <td>{{ $row->created_at->format('d-F-Y') }}</td>
                 <td><a href="{{ route('admin.customer.show',$row->user->id) }}">{{ $row->user->name }}</a></td>
                 <td>{{ amount_format($row->amount) }}</td>
@@ -243,11 +243,11 @@
                   @else
                   <span class="badge badge-danger">{{ __('Fail') }}</span>
                   @endif
-                  
+
                 </td>
 
                 <td>
-                  @if($row->status == 1) 
+                  @if($row->status == 1)
                   <span class="badge badge-success">Approved</span>
                   @elseif($row->status == 2)
                   <span class="badge badge-warning">{{ __('Pending') }}</span>
@@ -263,13 +263,13 @@
                     {{ __('Action') }}
                   </button>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item has-icon" href="{{ route('admin.order.edit',$row->id) }}"><i class="far fa-edit"></i> {{ __('Edit') }}</a>
-                    <a class="dropdown-item has-icon" href="{{ route('admin.order.show',$row->id) }}"><i class="far fa-eye"></i> {{ __('View') }}</a>
-                    <a class="dropdown-item has-icon" href="{{ route('admin.order.invoice',$row->id) }}"><i class="fa fa-file-invoice"></i> {{ __('Download Invoice') }}</a>
+                    <a class="dropdown-item has-icon" href="{{ route('admin.orders.edit',$row->id) }}"><i class="far fa-edit"></i> {{ __('Edit') }}</a>
+                    <a class="dropdown-item has-icon" href="{{ route('admin.orders.show',$row->id) }}"><i class="far fa-eye"></i> {{ __('View') }}</a>
+                    <a class="dropdown-item has-icon" href="{{ route('admin.orders.invoice',$row->id) }}"><i class="fa fa-file-invoice"></i> {{ __('Download Invoice') }}</a>
 
                   </div>
                 </div></td>
-              </tr> 
+              </tr>
               @endforeach
             </tbody>
           </table>
@@ -287,7 +287,7 @@
       <div class="card-header">
         <h4>Site Analytics</h4>
         <div class="card-header-action">
-          <select class="form-control" id="days"> 
+          <select class="form-control" id="days">
             <option value="7">Last 7 Days</option>
             <option value="15">Last 15 Days</option>
             <option value="30">Last 30 Days</option>

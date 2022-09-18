@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,15 +20,33 @@ use Carbon\Carbon;
 class AdminController extends Controller
 {
 
+    public function login_form(){
+        return view('admin.auth.login');
+    }
+
+    public function login(Request $request){
+
+        $credentials = array(
+            'email' => $request->email,
+            'password' =>$request->password
+        );
+        if (Auth::guard('admin')->attempt($credentials)) {
+            return redirect()->route('admin.dashboard.static');
+        }
+        else{
+            return redirect()->route('admin.login.form')->with('error','Login failed, please try again!');
+        }
+    }
+
     public function settings(){
         return view('seller.settings');
     }
 
     public function dashboard()
     {
-        if (!Auth()->user()->can('dashboard')) {
-        return abort(401);
-        }
+//        if (!Auth()->user()->can('dashboard')) {
+//        return abort(401);
+//        }
         $request_users=User::where([
             ['role_id',3],
             ['status',3]
@@ -174,10 +193,11 @@ class AdminController extends Controller
      */
     public function index()
     {
-        if (Auth()->user()->can('admin.list')) {
-            $users = User::where('role_id',1)->where('id','!=',1)->latest()->get();
-            return view('admin.admin.index', compact('users'));
-        }
+//        if (Auth()->user()->can('admin.list')) {
+            //$users = User::where('role_id',1)->where('id','!=',1)->latest()->get();
+            $admins=Admin::where('id','!=' , Auth::guard('admin')->user()->id)->with('roles')->get();
+            return view('admin.admin.index', compact('admins'));
+//        }
     }
 
     /**
@@ -187,10 +207,10 @@ class AdminController extends Controller
      */
     public function create()
     {
-        if (Auth()->user()->can('admin.create')) {
-            $roles  = Role::all();
+        //if (Auth()->user()->can('admin.create')) {
+            $roles  =Role::where('id' , '!=' , 1)->get();
             return view('admin.admin.create', compact('roles'));
-        }
+        //}
     }
 
     /**
@@ -201,6 +221,7 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+
         // Validation Data
         $request->validate([
             'name' => 'required|max:50',
@@ -210,19 +231,19 @@ class AdminController extends Controller
         ]);
 
         // Create New User
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->role_id = 1;
-        $user->password = Hash::make($request->password);
-        $user->save();
+        $admin = new Admin();
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+//        $user->role_id = 1;
+        $admin->password = Hash::make($request->password);
+        $admin->save();
 
         if ($request->roles) {
-            $user->assignRole($request->roles);
+            $admin->assignRole($request->roles);
         }
 
 
-        return response()->json(['User has been created !!']);
+        return response()->json(['Admin has been created !!']);
     }
 
     /**
@@ -244,11 +265,12 @@ class AdminController extends Controller
      */
     public function edit($id)
     {
-        if (Auth()->user()->can('admin.edit')) {
-            $user = User::find($id);
-            $roles  = Role::all();
-            return view('admin.admin.edit', compact('user', 'roles'));
-        }
+        //if (Auth()->user()->can('admin.edit')) {
+            $admin = Admin::whereId($id)->first();
+            $roles  = Role::where('id' , '!=' , 1)->get();
+        $admintoedit['roles']=DB::table('model_has_roles')->whereModel_id($id)->whereModel_type('App\Models\Admin')->select('role_id')->pluck('role_id');
+            return view('admin.admin.edit', compact('admin', 'roles','admintoedit'));
+        //}
     }
 
     /**
@@ -261,31 +283,29 @@ class AdminController extends Controller
     public function update(Request $request, $id)
     {
         // Create New User
-        $user = User::find($id);
+        $admin = Admin::find($id);
 
         // Validation Data
-        $request->validate([
-            'name' => 'required|max:50',
-            'email' => 'required|max:100|email|unique:users,email,' . $id,
-            'password' => 'nullable|min:6|confirmed',
-        ]);
-
-
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->status = $request->status;
+//        $request->validate([
+//            'name' => 'required|max:50',
+//            'email' => 'required|max:100|email|unique:users,email,' . $id,
+//            'password' => 'nullable|min:6|confirmed',
+//        ]);
+        $admin->name = $request->name;
+        $admin->email = $request->email;
+        $admin->status = $request->status;
         if ($request->password) {
-            $user->password = Hash::make($request->password);
+            $admin->password = Hash::make($request->password);
         }
-        $user->save();
+        $admin->save();
 
-        $user->roles()->detach();
+        $admin->roles()->detach();
         if ($request->roles) {
-            $user->assignRole($request->roles);
+            $admin->assignRole($request->roles);
         }
 
 
-        return response()->json(['User has been updated !!']);
+        return response()->json(['Admin has been updated !!']);
     }
 
     /**
@@ -297,28 +317,38 @@ class AdminController extends Controller
     public function destroy(Request $request)
     {
 
-        if (Auth()->user()->can('admin.delete')) {
+//        if (Auth()->user()->can('admin.delete')) {
 
                 if ($request->status == 'delete') {
                     if ($request->ids) {
                         foreach ($request->ids as $id) {
-                            User::destroy($id);
+                            Admin::destroy($id);
                         }
                     }
                 }
                 else{
-
                     if ($request->ids) {
                         foreach ($request->ids as $id) {
-                            $post = User::find($id);
+                            $post = Admin::find($id);
                             $post->status = $request->status;
                             $post->save();
                         }
                     }
                 }
 
-        }
+//        }
 
-        return response()->json('Success');
+//        return response()->json('Success');
+        return  redirect()->route('admin.admins.index')->with('success','تم تعديل حالة المدير بنجاح');
+    }
+
+    public function EditProfile(){
+        return view('admin.auth.editprofile');
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('admin.login.form');
+
     }
 }

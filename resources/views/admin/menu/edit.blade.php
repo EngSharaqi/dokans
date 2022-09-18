@@ -13,7 +13,7 @@
 
 							</ul>
 						</div>
-						<form method="post" id="basicform" action="{{ route('admin.menu.update',$info->id) }}">
+						<form method="post" id="basicform" action="{{ route('admin.menus.update',$info->id) }}">
 							@csrf
 							@method('PUT')
 							<div class="custom-form">
@@ -35,7 +35,7 @@
 										<option value="footer" @if($info->position=='footer') selected="" @endif>{{ __('Footer') }}</option>
 										@endif
 									</select>
-									
+
 								</div>
 								<div class="form-group">
 									<label for="lang">{{ __('Select Language') }}</label>

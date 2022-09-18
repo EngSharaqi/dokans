@@ -11,11 +11,11 @@
         <div class="card-header-action">
           <small class="text-right">{{ __('Note') }}: <span class="text-danger">{{ __('It Will Replace Existing User Domain') }}</span></small>
         </div>
-        
+
       </div>
       <div class="card-body">
 
-        <form class="basicform" action="{{ route('admin.domain.update',$info->id) }}" method="post">
+        <form class="basicform" action="{{ route('admin.domains.update',$info->id) }}" method="post">
           @csrf
           @method('PUT')
         <div class="form-group row mb-4">
@@ -28,7 +28,7 @@
         <div class="form-group row mb-4">
           <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" >{{ __('Full Domain With Protocol') }}  <small class="text-danger">https://example.com</small></label>
 
-         
+
           <div class="col-sm-12 col-md-7">
             <input type="text" class="form-control" required="" name="full_domain" value="{{ $info->full_domain }}">
           </div>
@@ -37,12 +37,12 @@
         <div class="form-group row mb-4">
           <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3" >{{ __('Customer Email') }}</label>
 
-         
+
           <div class="col-sm-12 col-md-7">
             <input type="email" class="form-control" required="" name="email" id="email" value="{{ $info->user->email }}">
           </div>
-        </div>       
-       
+        </div>
+
         <div class="form-group row mb-4">
           <label class="col-form-label text-md-right col-12 col-md-3 col-lg-3">{{ __('Status') }}</label>
           <div class="col-sm-12 col-md-7">
@@ -68,11 +68,11 @@
         $paths=explode($ext, base_path());
         $count=count($paths);
         @endphp
-        <span>Your Root Path: <b><span class="text-danger">@foreach($paths as $key => $row) 
+        <span>Your Root Path: <b><span class="text-danger">@foreach($paths as $key => $row)
           @php
           $key=$key+1;
-          @endphp 
-         @if($key != $count){{ $row }}\@endif 
+          @endphp
+         @if($key != $count){{ $row }}\@endif
          @endforeach</span></span>
           <br>
         <span>{{ __('Note') }}: <b><span class="text-danger">{{ __('Before Add Or Edit Domain Please Create Or Edit Domain Manually On Your Server The Domain Root Path Is Same With Your Project Directory') }}</span></b></span>

@@ -7,64 +7,64 @@
 	<div class="col-12 mt-2">
 		<div class="card">
 			<div class="card-body">
-				<form method="post" action="{{ route('admin.plan.update',$info->id) }}" class="basicform">
+				<form method="post" action="{{ route('admin.plans.update',$info->id) }}" class="basicform">
 					@csrf
 					@method('PUT')
 					<div class="row">
 						<div class="col-sm-8">
 							<div class="form-group">
 								<label>{{ __('Plan Name') }}</label>
-								<input type="text" name="name" class="form-control" required value="{{ $info->name }}"> 
+								<input type="text" name="name" class="form-control" required value="{{ $info->name }}">
 							</div>
 
 							<div class="form-group">
 								<label>{{ __('Plan description') }}</label>
 								<input type="text" class="form-control" required="" name="description" value="{{ $info->description }}"></textarea>
-							</div> 
+							</div>
 
 
 							<div class="form-group">
 								<label>{{ __('Plan Price') }}</label>
-								<input type="number" step="any" name="price" class="form-control" required value="{{ $info->price }}"> 
+								<input type="number" step="any" name="price" class="form-control" required value="{{ $info->price }}">
 							</div>
-							
+
 
 							<div class="form-group">
 								<label>{{ __('Product Limit') }}</label>
-								<input type="number"  name="product_limit" class="form-control" required value="{{ $plan_info->product_limit }}"> 
+								<input type="number"  name="product_limit" class="form-control" required value="{{ $plan_info->product_limit }}">
 							</div>
 							<div class="form-group">
 								<label>{{ __('Storage Limit') }} (MB)</label>
-								<input type="number"  name="storage" class="form-control" required  value="{{ $plan_info->storage }}"> 
+								<input type="number"  name="storage" class="form-control" required  value="{{ $plan_info->storage }}">
 							</div>
 							<div class="form-group">
 								<label>{{ __('Customer Limit') }}</label>
-								<input type="number" value="{{ $plan_info->customer_limit }}"  name="customer_limit" class="form-control" required> 
+								<input type="number" value="{{ $plan_info->customer_limit }}"  name="customer_limit" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>{{ __('Category Limit') }}</label>
-								<input type="number" value="{{ $plan_info->category_limit }}"  name="category_limit" class="form-control" required> 
+								<input type="number" value="{{ $plan_info->category_limit }}"  name="category_limit" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>{{ __('Location Limit') }}</label>
-								<input type="number" value="{{ $plan_info->location_limit }}"  name="location_limit" class="form-control" required> 
+								<input type="number" value="{{ $plan_info->location_limit }}"  name="location_limit" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>{{ __('Brand Limit') }}</label>
-								<input type="number" value="{{ $plan_info->brand_limit }}"  name="brand_limit" class="form-control" required> 
+								<input type="number" value="{{ $plan_info->brand_limit }}"  name="brand_limit" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>{{ __('Variation Limit') }}</label>
-								<input type="number" value="{{ $plan_info->variation_limit }}"  name="variation_limit" class="form-control" required> 
+								<input type="number" value="{{ $plan_info->variation_limit }}"  name="variation_limit" class="form-control" required>
 							</div>
-							
+
 
 							<div class="form-group">
 								<button class="btn btn-primary basicbtn" type="submit" >{{ __('Update') }}</button>
 							</div>
 						</div>
 						<div class="col-sm-4">
-							
+
 							<div class="form-group">
 								<label>{{ __('Duration') }}</label>
 								<select class="form-control" name="days">
@@ -90,7 +90,7 @@
 								</select>
 							</div>
 
-							
+
 							<div class="form-group">
 								<label>{{ __('POS') }}</label>
 								<select class="form-control" name="pos">
@@ -133,7 +133,7 @@
 									<option  @if($plan_info->qr_code  == false || $plan_info->qr_code  == 'false') selected @endif value=false >{{ __('Disable') }}</option>
 								</select>
 							</div>
-							
+
 							<div class="form-group">
 								<label>{{ __('Facebook Pixel') }}</label>
 								<select class="form-control" name="facebook_pixel">
@@ -169,8 +169,8 @@
 									<option  @if($plan_info->google_analytics  == false || $plan_info->google_analytics  == 'false') selected @endif value=false >{{ __('Disable') }}</option>
 								</select>
 							</div>
-							
-							
+
+
 							<div class="form-group">
 								<label>{{ __('Is Featured ?') }}</label>
 								<select class="form-control" name="featured">
@@ -178,7 +178,13 @@
 									<option value="1" @if($info->featured==1) selected="" @endif>{{ __('Yes') }}</option>
 								</select>
 							</div>
-							
+                            <div class="form-group">
+                                <label>{{ __('Lang') }}</label>
+                                <select class="form-control" name="lang">
+                                    <option value="en" @if($info->lang=='en') selected="" @endif>{{ __('En') }}</option>
+                                    <option value="ar" @if($info->lang=='ar') selected="" @endif>{{ __('Ar') }}</option>
+                                </select>
+                            </div>
 							<div class="form-group">
 								<label>{{ __('Status') }}</label>
 								<select class="form-control" name="status">
@@ -192,7 +198,7 @@
 					</div>
 
 
-					
+
 				</form>
 
 

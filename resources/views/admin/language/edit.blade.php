@@ -20,7 +20,7 @@
 						<div class="col-sm-5"><h6><b>{{ __('Key') }}</b></h6></div>
 						<div class="col-sm-7"><h6><b>{{ __('Value') }}</b></h6></div>
 				</div>
-				<form class="basicform" action="{{ route('admin.language.update',$id) }}" method="post">
+				<form class="basicform" action="{{ route('admin.languages.update',$id) }}" method="post">
 					@csrf
 					@method('PUT')
 					@foreach($posts as $key => $row)
@@ -29,24 +29,24 @@
 						<div class="col-sm-7"><input type="text" name="values[{{ $key }}]" class="form-control" value="{{ $row }}"></div>
 					</div>
 					@endforeach
-						
-					      
+
+
 
 					<div class="form-group row mb-4">
-						
+
 						<div class="col-sm-12 col-md-12">
 							<button class="btn btn-primary basicbtn" type="submit">{{ __('Save Changes') }}</button>
 						</div>
 					</div>
 				</form>
-				
+
 			</div>
 		</div>
 	</div>
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<form method="post" class="basicform_with_reset" action="{{ route('admin.language.add_key') }}">
+	<form method="post" class="basicform_with_reset" action="{{ route('admin.languages.add_key') }}">
 		@csrf
 	<input type="hidden" name="id" value="{{ $id }}">
   <div class="modal-dialog">

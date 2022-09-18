@@ -12,10 +12,10 @@ class CustomdomainController extends Controller
 {
 	public function index(Request $request)
 	{
-     abort_if(getenv("AUTO_APPROVED_DOMAIN") == false,404);
-		if (!Auth()->user()->can('domain.list')) {
-			return abort(401);
-		}
+     //abort_if(getenv("AUTO_APPROVED_DOMAIN") == false,404);
+//		if (!Auth()->user()->can('domain.list')) {
+//			return abort(401);
+//		}
 
 		if ($request->type=='email') {
 			$this->email=$request->src;
@@ -40,9 +40,9 @@ class CustomdomainController extends Controller
 
 	public function show(Request $request,$id)
 	{
-		if (!Auth()->user()->can('domain.list')) {
-        return abort(401);
-       }
+//		if (!Auth()->user()->can('domain.list')) {
+//        return abort(401);
+//       }
 
        if ($request->type=='email') {
         $this->email=$request->src;
@@ -57,7 +57,7 @@ class CustomdomainController extends Controller
         $posts=Requestdomain::with('user','parentdomain')->where('status',$id)->latest()->paginate(40);
        }
 
-      
+
         $all=Requestdomain::count();
         $actives=Requestdomain::where('status',1)->count();
         $trash=Requestdomain::where('status',0)->count();
@@ -91,22 +91,22 @@ class CustomdomainController extends Controller
       $current_domain->domain=$request->domain;
       $current_domain->full_domain=$full_domain;
       $current_domain->save();
-      
+
 
     }
 
     return response()->json(['Domain Updated']);
-    	
+
 
 
 	}
 
 	public function destroy(Request $request)
 	{
-		if (!Auth()->user()->can('domain.delete')) {
-          return abort(401);
-        }
-       
+//		if (!Auth()->user()->can('domain.delete')) {
+//          return abort(401);
+//        }
+
         if ($request->ids) {
             if ($request->method != 'delete') {
                 foreach ($request->ids as $id) {
@@ -114,7 +114,7 @@ class CustomdomainController extends Controller
                     $domain->status=$request->method;
                     $domain->save();
                 }
-                
+
             }
             else{
                 foreach ($request->ids as $id) {

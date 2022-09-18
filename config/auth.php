@@ -47,10 +47,14 @@ return [
             'hash' => false,
         ],
 
-        'customer' => [
+//        'customer' => [
+//            'driver' => 'session',
+//            'provider' => 'customers',
+//        ],
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'customers',
-        ]
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -76,10 +80,14 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'customers' => [
+//        'customers' => [
+//            'driver' => 'eloquent',
+//            'model' => App\Models\Customer::class,
+//        ],
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Customer::class,
-        ]
+            'model' => App\Models\Admin::class,
+        ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -109,11 +117,11 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
-        'customers' => [
-            'provider' => 'customers',
-            'table' => 'password_resets',
-            'expire' => 60,
-        ],
+//        'customers' => [
+//            'provider' => 'customers',
+//            'table' => 'password_resets',
+//            'expire' => 60,
+//        ],
     ],
 
     /*

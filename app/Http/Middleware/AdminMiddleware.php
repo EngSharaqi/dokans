@@ -20,6 +20,6 @@ class AdminMiddleware
            return $next($request);
         }else{
             return redirect()->route('login');
-        } 
+        }
     }
 }

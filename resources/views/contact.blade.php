@@ -25,22 +25,22 @@ $info=Cache::get('site_info','');
       <div class="col-lg-4 col-md-6">
         <div class="contact-block mb-4 mb-lg-0">
           <i class="icofont-live-support"></i>
-          <h5>Call Us</h5>
+          <h5>{{ __('Call Us') }}</h5>
            {{ $info->phone1 ?? '' }}
         </div>
       </div>
       <div class="col-lg-4 col-md-6">
         <div class="contact-block mb-4 mb-lg-0">
           <i class="icofont-support-faq"></i>
-          <h5>Email Us</h5>
+          <h5>{{ __('Email Us') }}</h5>
           {{ $info->email1 ?? '' }}
         </div>
       </div>
       <div class="col-lg-4 col-md-12">
         <div class="contact-block mb-4 mb-lg-0">
           <i class="icofont-location-pin"></i>
-          <h5>Location</h5>
-         {{ $info->address ?? '' }} 
+          <h5>{{ __('Location') }}</h5>
+         {{ $info->address ?? '' }}
         </div>
       </div>
     </div>
@@ -52,38 +52,38 @@ $info=Cache::get('site_info','');
   <div class="container">
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12">
-        
+
           <form action="{{ route('send_mail') }}" method="post" class="basicform_with_reset contact__form">
               @csrf
           <!-- form message -->
-          
+
 
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group">
-                <input name="name" id="name"   required type="text" class="form-control" placeholder="Your Full Name">
+                <input name="name" id="name"   required type="text" class="form-control" placeholder="{{ __('Your Full Name') }}">
               </div>
             </div>
 
             <div class="col-lg-6">
               <div class="form-group">
-                <input name="email" id="email"  type="email" class="form-control" placeholder="Your Email Address" required>
+                <input name="email" id="email"  type="email" class="form-control" placeholder="{{ __('Your Email Address') }}" required>
               </div>
             </div>
-           
+
           </div>
 
           <div class="form-group-2 mb-4">
-            <textarea name="message" id="message" class="form-control" rows="8" placeholder="Your Message" required></textarea>
+            <textarea name="message" id="message" class="form-control" rows="8" placeholder="{{ __('Your Message') }}" required></textarea>
           </div>
           @if(env('NOCAPTCHA_SITEKEY') != null)
           <div class="form-group">
             {!! NoCaptcha::renderJs() !!}
             {!! NoCaptcha::display() !!}
           </div>
-          @endif 
+          @endif
           <div>
-            <input class="btn btn-main btn-round-full basicbtn" name="submit" type="submit" value="Send Messege"></input>
+            <input class="btn btn-main btn-round-full basicbtn" name="submit" type="submit" value="{{ __('Send Messege') }}"></input>
           </div>
         </form>
       </div>
